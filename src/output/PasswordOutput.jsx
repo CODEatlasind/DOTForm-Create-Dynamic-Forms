@@ -1,0 +1,28 @@
+import { TextField } from "@mui/material";
+
+export default function PasswordOutput(id, typos, attr) {
+  return (
+    <div key="Passw">
+      <TextField
+        id={id}
+        type="password"
+        label={typos.label + " Password"}
+        autoComplete="current-password"
+        size="small"
+      />
+      {/* <label>{typos.label + " password"}:</label>
+      <input
+        type="password"
+        placeholder="Enter password"
+        autoComplete="current-password"
+      />
+      <br /> */}
+      {typos.smallDescription && (
+        <>
+          <br />
+          <small>{typos.smallDescription}</small>
+        </>
+      )}
+    </div>
+  );
+}

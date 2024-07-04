@@ -1,0 +1,40 @@
+.page,
+.page-shared {
+  width: 95vw;
+  max-width: 19cm;
+  min-height: 29.7cm;
+
+  padding: 2em 1em 1em 1em;
+  margin: 1em 0.5em 0 0.5em;
+  background: white;
+  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  position: relative;
+}
+
+.form-preview-container {
+  border-radius: 5px;
+}
+.page input,
+.page h1,
+.page h2,
+.page small {
+  border: dashed black 1px;
+  border-radius: 5px;
+}
+.page * {
+  margin: 5px 0;
+}
+
+.page-shared * {
+  margin: 5px 0;
+}
+
+.form-share-container {
+  padding: 1em;
+  width: 100%;
+}
+.associated-title {
+  text-shadow: 0 2px 0 rgba(75, 75, 75, 0.2);
+}
