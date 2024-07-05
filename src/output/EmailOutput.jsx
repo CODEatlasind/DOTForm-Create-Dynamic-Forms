@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 
 export default function EmailOutput(id, typos, attr) {
   return (
-    <div key="E-mail">
+    <div key={"E-mail" + id}>
       {/* <label>
         {typos.label + " Email"}
         <span className={attr.required ? "text-red-600" : "hidden"}>*</span>

@@ -18,18 +18,18 @@ import RequiredFields from "./config/RequiredFields";
 function FormPreview({ formFields, onReset }) {
   const formRef = useRef();
   const [title, setTitle] = useState("Create Dynamic Forms");
-  const [previewField, setPreviewField] = useState([]);
+  // const [previewField, setPreviewField] = useState([]);
   const [formId, setFormId] = useState(null);
   const [formLink, setFormLink] = useState(null);
 
   useEffect(() => {
     document.title = "DOTForm - " + title;
   }, [title]);
-  useEffect(() => {
-    if (formFields && formFields.length > 0) {
-      setPreviewField(formFields);
-    }
-  }, [formFields]);
+  // useEffect(() => {
+  //   if (formFields && formFields.length > 0) {
+  //     setPreviewField(formFields);
+  //   }
+  // }, [formFields]);
 
   useEffect(() => {
     setFormLink(window.location.href + "forms/" + formId);
@@ -38,7 +38,7 @@ function FormPreview({ formFields, onReset }) {
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
-  // !const onSub = (currentId, currentType) => {
+  // const onSub = (currentId, currentType) => {
   //   // const updatedPreviewField = [
   //   // const updatedPreviewField = [
   //   //   ...previewField.slice(0, currentId),
@@ -110,9 +110,12 @@ function FormPreview({ formFields, onReset }) {
                 typos={field.typos}
                 attr={field.attr}
               />
-              {/* <button onClick={() => onSub(idx)} type="reset" className="p-1">
+              {/* <small
+                onClick={() => onSub(idx, field.type)}
+                className="bg-white rounded-full p-1 cursor-pointer"
+              >
                 -
-              </button> */}
+              </small> */}
             </>
           );
         })}

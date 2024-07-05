@@ -28,7 +28,7 @@ function TextFieldInput({ formStyle }) {
   return (
     <>
       <div>
-        <label>Label:</label>
+        <label>Enter Label</label>
         <br />
         <input
           type="text"
@@ -37,7 +37,7 @@ function TextFieldInput({ formStyle }) {
           onChange={handleChange}
         />
         <br />
-        <label>Title:</label>
+        <label>Enter Description</label>
         <br />
         <input
           type="text"
@@ -47,7 +47,7 @@ function TextFieldInput({ formStyle }) {
         />
         <br />
 
-        <label>Required:</label>
+        <label>Required: </label>
         <input
           type="checkbox"
           name="required"
@@ -73,15 +73,15 @@ function TextFieldInput({ formStyle }) {
           onChange={handleAttributeChange}
         />
         <br />
-        <label>Pattern (Regex):</label>
+        {/* ! Pattern to be added */}
+        {/* <label>Pattern (Regex):</label>
         <br />
         <input
           type="text"
           name="pattern"
           value={attributes.pattern}
           onChange={handleAttributeChange}
-        />
-        {/* Pattern to be added */}
+        /> */}
       </div>
       <hr />
       <h3>Preview:</h3>

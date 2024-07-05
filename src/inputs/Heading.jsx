@@ -4,7 +4,7 @@ import FieldPreview from "../output/FieldPreview";
 
 export default function Heading({ formStyle }) {
   const [typography, setTypography] = useState({
-    label: "Sub-Heading",
+    label: "",
     smallDescription: "",
   });
   const handleTypographyChange = (e) => {
@@ -21,7 +21,7 @@ export default function Heading({ formStyle }) {
   return (
     <>
       <form className="input-field">
-        <label>Enter Header</label>
+        <label>Enter a Heading</label>
         <br />
         <input
           type="text"
@@ -31,10 +31,12 @@ export default function Heading({ formStyle }) {
         />
         <br />
       </form>
-      <section className="preview-field">
-        <p>Preview</p>
-        <FieldPreview type="heading" typos={typography} />
-      </section>
+      {typography.label && (
+        <section className="preview-field">
+          <p>Preview</p>
+          <FieldPreview id="4" type="heading" typos={typography} />
+        </section>
+      )}
     </>
   );
 }

@@ -38,3 +38,6 @@
 .associated-title {
   text-shadow: 0 2px 0 rgba(75, 75, 75, 0.2);
 }
+.form-accordion {
+  transition: scale 0s, opacity 0.25s ease-out;
+}

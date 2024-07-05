@@ -33,55 +33,57 @@ function FormAccordion({ onAdd }) {
       </h1>
 
       <div
-        className={`form-accordion   ${showAcc ? "hidden " : ""}  
-        lg:block pt-1 pb-3 px-1 rounded-md bg-dark-sec-blue  `}
+        className={`form-accordion   ${
+          showAcc ? "h-0 opacity-0  " : "  h-fit opacity-100"
+        }  
+        lg:h-fit lg:opacity-100  pt-1 pb-3 px-1 rounded-md bg-dark-sec-blue z-50 `}
       >
         <h1 className="accordion-title text-center font-semibold text-white uppercase">
           Accordion Menu
         </h1>
-        {fieldConfig && fieldConfig.length > 0
-          ? fieldConfig.map((Element) => {
-              return (
-                <Accordion
-                  className="choice-container z-2 lg:absolute lg:top-2 "
-                  key={Element.id}
+        {fieldConfig &&
+          fieldConfig.length > 0 &&
+          fieldConfig.map((Element) => {
+            return (
+              <Accordion
+                className="choice-container z-2 lg:absolute lg:top-2 "
+                key={"Options" + Element.id}
+              >
+                <AccordionSummary
+                  key={"Summary" + Element.id}
+                  expandIcon={<ArrowDropDown />}
+                  aria-controls="panel2-content"
+                  id="panel2-header"
+                  className="field-selector uppercase"
                 >
-                  <AccordionSummary
-                    key={Element.id}
-                    expandIcon={<ArrowDropDown />}
-                    aria-controls="panel2-content"
-                    id="panel2-header"
-                    className="field-selector uppercase"
-                  >
-                    <Typography key={Element.id}>{Element.name}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails
-                    className="text-center "
-                    key={"DD" + Element.id}
-                  >
-                    {
-                      <Element.component
-                        // key={"Component" + Element.id}
-                        id={Element.id}
-                        formStyle={Element.formStyle}
-                      />
-                    }
+                  <Typography key={Element.id}>{Element.name}</Typography>
+                </AccordionSummary>
+                <AccordionDetails
+                  className="text-center "
+                  key={"DD" + Element.id}
+                >
+                  {
+                    <Element.component
+                      key={"Component" + Element.id}
+                      id={Element.id}
+                      formStyle={Element.formStyle}
+                    />
+                  }
 
-                    <button
-                      key={"Submit" + Element.id}
-                      type="submit"
-                      onClick={() => {
-                        onAdd(Element.id, Element.type, Element.formStyle);
-                      }}
-                      className="btn btn-add "
-                    >
-                      Add
-                    </button>
-                  </AccordionDetails>
-                </Accordion>
-              );
-            })
-          : null}
+                  <button
+                    key={"Submit" + Element.id}
+                    type="submit"
+                    onClick={() => {
+                      onAdd(Element.id, Element.type, Element.formStyle);
+                    }}
+                    className="btn btn-add "
+                  >
+                    Add
+                  </button>
+                </AccordionDetails>
+              </Accordion>
+            );
+          })}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 
 export default function NumberOutput(id, typos, attr) {
   return (
-    <div key="Numbr">
+    <div key={"Number" + id}>
       {/* <label>{typos.label + "No.:"}</label> */}
       <TextField
         id={id}
@@ -19,7 +19,6 @@ export default function NumberOutput(id, typos, attr) {
           <small>{typos.smallDescription}</small>
         </>
       )}
-      <br />
     </div>
   );
 }

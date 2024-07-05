@@ -11,6 +11,10 @@ body {
   width: 100%;
   height: 100%;
 }
+:root {
+  overscroll-behavior: none;
+  scroll-behavior: smooth;
+}
 
 button {
   --color: #ffffff;

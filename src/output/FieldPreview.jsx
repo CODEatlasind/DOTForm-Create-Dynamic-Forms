@@ -8,6 +8,7 @@ import typeRadio from "./RadioButtonOutput";
 import typeTele from "./TeleOutput";
 import typeText from "./TextFieldOutput";
 import typeHeading from "./HeadingOut";
+import typeLineBreak from "./LineBreakOut";
 
 const chooseInputComponent = (id, type, typos, attr) => {
   switch (type) {
@@ -29,13 +30,13 @@ const chooseInputComponent = (id, type, typos, attr) => {
       return [typeText(id, typos, attr)];
     case "heading":
       return [typeHeading(id, typos)];
-    case "line-break":
-      return <br />;
+    case "lineBreak":
+      return [typeLineBreak(id)];
     default:
       return null;
   }
 };
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!Changes HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 function FieldPreview({ id, type, typos, attr }) {
   return <>{chooseInputComponent(id, type, typos, attr)}</>;
 }

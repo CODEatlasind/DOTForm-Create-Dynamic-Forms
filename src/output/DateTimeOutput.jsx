@@ -2,9 +2,9 @@ import { TextField } from "@mui/material";
 
 export default function DateTimeOutput(id, typos, attr) {
   return (
-    <div key="D&T" className="m-auto">
+    <div key={"D&T" + id} className=" flex gap-2 justify-center items-center">
       <label className="">
-        {typos.label != "" ? typos.label + " Date" : "Date"}:
+        {typos.label != "" ? typos.label + " Date: " : "Date: "}
       </label>
 
       <TextField type="date" id={id} size="small" />

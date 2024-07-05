@@ -46,7 +46,7 @@ const fieldConfig = [
   {
     id: 5,
     name: "Line Break",
-    type: "line-Break",
+    type: "lineBreak",
     component: LineBreak,
     formStyle,
   },

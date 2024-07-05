@@ -158,19 +158,18 @@ export default function ShareableForm() {
 
         <RequiredFields compulsaryFields={identityFields} />
         <div className="supplemented-fields  ">
-          {formConfig
-            ? formConfig.map((field, idx) => {
-                return (
-                  <FieldPreview
-                    key={"form-shared" + field.type + idx}
-                    id={field.id}
-                    type={field.type}
-                    typos={field.typos}
-                    attr={field.attr}
-                  />
-                );
-              })
-            : null}
+          {formConfig &&
+            formConfig.map((field, idx) => {
+              return (
+                <FieldPreview
+                  key={"form-shared" + field.type + idx}
+                  id={field.id}
+                  type={field.type}
+                  typos={field.typos}
+                  attr={field.attr}
+                />
+              );
+            })}
         </div>
       </form>
       <div className="form-control-btn relative p-2 justify-center flex flex-wrap gap-6 ">

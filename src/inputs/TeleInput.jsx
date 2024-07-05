@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Preview from "../output/FieldPreview";
 import PropTypes from "prop-types";
+import FieldPreview from "../output/FieldPreview";
 function TeleInput({ formStyle }) {
   const [typography, setTypography] = useState({
     label: "",
     smallDescription: "",
   });
-  // const [value, setValue] = useState("");
+
   const [attributes, setAttributes] = useState({});
 
   const handleTypographyChange = (e) => {
@@ -21,34 +22,34 @@ function TeleInput({ formStyle }) {
 
   return (
     <>
-      <label>Enter category name:</label>
-      <input
-        type="text"
-        name="label"
-        value={typography.label}
-        onChange={handleTypographyChange}
-        placeholder="Enter label name first"
-      />
-      <span className="text-red-700">*</span>
-      <br />
-      <label>Enter description:</label>
-      <input
-        type="text"
-        name="smallDescription"
-        value={typography.smallDescription}
-        onChange={handleTypographyChange}
-        placeholder="Enter label name first"
-      />
-      <br />
-      <div className={typography.label === "" ? "hidden" : "date-container"}>
-        <Preview
-          type="tel"
-          typos={typography}
-          attr={attributes}
-          onTypoChange={handleTypographyChange}
-          onAttributeChange={handleChange}
+      <form className="input-field ">
+        <label>
+          Enter Fiel label<span className="text-red-700">*</span>
+        </label>
+        <br />
+        <input
+          type="text"
+          name="label"
+          value={typography.label}
+          onChange={handleTypographyChange}
+          placeholder="Enter label name first"
         />
-      </div>
+        <br />
+        <label>Enter Description</label>
+        <br />
+        <input
+          type="text"
+          name="smallDescription"
+          value={typography.smallDescription}
+          onChange={handleTypographyChange}
+          placeholder="Enter label name first"
+        />
+        <br />
+        <hr className="mt-2 mb-2 " />
+      </form>
+      <section className="date-container">
+        <FieldPreview id="9" type="tel" typos={typography} attr={attributes} />
+      </section>
       <br />
     </>
   );

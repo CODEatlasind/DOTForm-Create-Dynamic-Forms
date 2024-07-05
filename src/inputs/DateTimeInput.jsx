@@ -63,8 +63,7 @@ export default function DateTimeInput({ formStyle }) {
       <section className="preview-field">
         <h3 className="">Preview</h3>
         <FieldPreview
-          // key={"date-Out" + "2"}
-          id={"date" + "2"}
+          id={"2"}
           type="date"
           typos={typography}
           attr={attributes}

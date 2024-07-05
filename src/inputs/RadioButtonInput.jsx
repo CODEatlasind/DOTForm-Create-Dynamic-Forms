@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FieldPreview from "../output/FieldPreview";
+import PropTypes from "prop-types";
 
-export default function RadioButtonInput() {
+export default function RadioButtonInput({ formStyle }) {
   const [typography, setTypography] = useState({
     name: "",
     label: "",
@@ -25,20 +26,12 @@ export default function RadioButtonInput() {
       [newId]: newRadio,
     }));
   };
-  // const handleAddRadioButton = () => {
-  //   let cpyattributes = [...attributes];
-  //   cpyattributes.push({ id: attributes.length + 1, value: "" });
-  //   setAttributes(cpyattributes);
-  // };
-
-  // const handleChange = (e, id) => {
-  //   const { value } = e.target;
-  //   console.log(e.target);
-  //   const updatedattributes = attributes.map((item) =>
-  //     item.id === id ? { ...item, value: value } : item
-  //   );
-  //   setAttributes(updatedattributes);
-  // };
+  useEffect(() => {
+    formStyle.typos = typography;
+  }, [formStyle, typography]);
+  useEffect(() => {
+    formStyle.attr = attributes;
+  }, [formStyle, attributes]);
 
   const handleChange = (e, id) => {
     const { name, value, type, checked } = e.target;
@@ -46,14 +39,14 @@ export default function RadioButtonInput() {
       ...prevState,
       [id]: {
         ...prevState[id],
-        [name]: type === "checkbox" ? checked : value,
+        [name]: type === "radio" ? checked : value,
       },
     }));
   };
 
   const radioTextField = Object.values(attributes).map((rip) => {
     return (
-      <div key={rip.id}>
+      <div key={"radioField" + rip.id}>
         <span>{rip.id}:</span>
         <input
           type="text"
@@ -64,6 +57,13 @@ export default function RadioButtonInput() {
             handleChange(e, rip.id);
           }}
         />
+        <input
+          type="radio"
+          name="clicked"
+          onClick={(e) => {
+            handleChange(e, rip.id);
+          }}
+        ></input>
         <br />
       </div>
     );
@@ -84,60 +84,77 @@ export default function RadioButtonInput() {
 
   return (
     <>
-      <form>
-        <label>Name the category:</label>
-        <br />
-        <input
-          type="text"
-          name="name"
-          value={typography.name}
-          placeholder="Enter the category name first"
-          onChange={handleTypographicalChange}
-        ></input>
-
-        <br />
-        <label>Label:</label>
+      <form className="input-field ">
+        <label>
+          Enter Field Label<span className="text-red-700">*</span>
+        </label>
         <br />
         <input
           type="text"
           name="label"
           value={typography.label}
-          placeholder="Enter the category name first"
+          placeholder="Enter Label"
           onChange={handleTypographicalChange}
+          required
         ></input>
         <br />
-        <label>Description:</label>
+        <label>
+          Enter Category Name<span className="text-red-700">*</span>
+        </label>
+        <br />
+        <input
+          type="text"
+          name="name"
+          value={typography.name}
+          placeholder="Enter Category First"
+          onChange={handleTypographicalChange}
+          required
+        ></input>
+
+        <br />
+        <label>Enter Description</label>
         <br />
         <input
           type="text"
           name="smallDescription"
           value={typography.smallDescription}
-          placeholder="Enter a description"
+          placeholder="Enter Description"
           onChange={handleTypographicalChange}
         ></input>
         <br />
+        {typography.name !== "" && typography.label !== "" && (
+          <>
+            <button
+              onClick={handleAddRadioButton}
+              type="button"
+              className="AddOptionsbutton"
+            >
+              Options
+            </button>
+            {typography.name != "" && radioTextField}
+          </>
+        )}
+        <hr className="mt-2 mb-2 " />
       </form>
-      <section>
-        <button
-          onClick={handleAddRadioButton}
-          className={typography.label != "" ? "Addbutton" : "hidden"}
-        >
-          Add Options
-        </button>
-      </section>
-      <br />
-      {typography.name != "" ? radioTextField : null}
 
-      <div
-        className={
-          typography.name != ""
-            ? "preview-Container"
-            : "preview-Container hidden"
-        }
-      >
-        <h3>Preview:</h3>
-        <FieldPreview type="radio" typos={typography} attr={attributes} />
-      </div>
+      <section className="preview-field">
+        {typography.label !== "" && typography.name !== "" ? (
+          <>
+            <h3>Preview:</h3>
+            {attributes && Object.keys(attributes).length > 0 && (
+              <FieldPreview type="radio" typos={typography} attr={attributes} />
+            )}
+          </>
+        ) : (
+          <small className="text-red-700">Fill Out Empty Fields</small>
+        )}
+      </section>
     </>
   );
 }
+RadioButtonInput.propTypes = {
+  formStyle: PropTypes.shape({
+    typos: PropTypes.object,
+    attr: PropTypes.object,
+  }),
+};

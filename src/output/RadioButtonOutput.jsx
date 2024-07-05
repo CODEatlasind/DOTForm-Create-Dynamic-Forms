@@ -2,7 +2,7 @@ import { Radio } from "@mui/material";
 
 export default function RadioButtonOutput(id, typos, attr) {
   return (
-    <div key="Radio">
+    <div key={"Radio" + id}>
       <label>{typos.label + ":"}</label>
 
       {Object.values(attr).map((rip) => (

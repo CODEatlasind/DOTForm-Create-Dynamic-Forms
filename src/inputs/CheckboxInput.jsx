@@ -113,7 +113,7 @@ export default function CheckboxInput({ formStyle }) {
           onChange={handleTypographicalChange}
         ></input>
         <br />
-        {typography.name !== "" ? (
+        {typography.name !== "" && typography.label !== "" && (
           <>
             <button
               onClick={handleAddCheckboxButton}
@@ -122,9 +122,9 @@ export default function CheckboxInput({ formStyle }) {
             >
               Options
             </button>
-            {checkboxTextField}
+            {typography.name != "" && checkboxTextField}
           </>
-        ) : null}
+        )}
         <hr className="mt-2 mb-2 " />
       </form>
 

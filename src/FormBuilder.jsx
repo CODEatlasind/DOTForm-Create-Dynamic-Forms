@@ -13,11 +13,9 @@ export default function FormBuilder() {
     const typography = currFormStyle.typos;
     const attributes = currFormStyle.attr;
     // if (
-    //   (currentType !== "radio" || currentType !== "checkbox") &&
-    //   typography.label.trim() !== "" &&
-    //   typography.name.trim() !== ""
-    // )
-    // {
+    //   (typography.label !== "" && typography.name !== "") ||
+    //   currentType == "Line-break"
+    // ) {
     const newFormField = {
       id: uuidv4(),
       type: currentType,
@@ -25,7 +23,7 @@ export default function FormBuilder() {
       attr: attributes,
     };
     setFormFields([...formFields, newFormField]);
-    //  }
+    // }
   };
 
   const handleReset = () => {
@@ -48,7 +46,7 @@ export default function FormBuilder() {
         console.error("Error sending data:", error);
       });
   };
-  // console.log("Builder", formFields);
+  console.log("Builder", formFields);
   return (
     <div className="form-container bg-cyan-50 dark:bg-dark-body-blue  flex flex-wrap lg:flex-nowrap justify-center p-4 lg:py-8">
       <FormAccordion onAdd={handleAddition} />

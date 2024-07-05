@@ -3,10 +3,10 @@ import { Checkbox } from "@mui/material";
 
 export default function CheckBoxOutput(id, typos, attr) {
   return (
-    <div>
+    <div key={"checkbox" + id}>
       <label id={"label" + id}>{typos.label + ":"}</label>
       {Object.values(attr).map((rip) => (
-        <span key={"key" + rip.id}>
+        <span key={"boxes" + rip.id}>
           <Checkbox label={rip.label} name={typos.name} id={toString(rip.id)} />
           <span id={rip.id}>{rip.value}</span>
         </span>

@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 
 export default function PasswordOutput(id, typos, attr) {
   return (
-    <div key="Passw">
+    <div key={"Password" + id}>
       <TextField
         id={id}
         type="password"
