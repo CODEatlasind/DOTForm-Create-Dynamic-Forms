@@ -7,7 +7,8 @@ export default function PasswordOutput(id, typos, attr) {
         id={id}
         type="password"
         label={typos.label + " Password"}
-        autoComplete="current-password"
+        // autoComplete="current-password"
+        autoComplete="username"
         size="small"
       />
       {/* <label>{typos.label + " password"}:</label>

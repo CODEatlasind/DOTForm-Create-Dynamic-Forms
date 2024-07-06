@@ -37,7 +37,7 @@
 // export default PdfConfig;
 
 const PdfConfig = {
-  scale: 1, // Increase scale for higher resolution
+  scale: 0.75, // Increase scale for higher resolution
   useCORS: true, // Enable CORS if images are loaded from different origins
   logging: true, // Enable logging for debugging
   allowTaint: false, // Allow tainted images (cross-origin images)

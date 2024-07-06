@@ -38,7 +38,7 @@ export default function DateTimeInput({ formStyle }) {
   }, [formStyle, attributes]);
   return (
     <>
-      <form className="input-field">
+      <div className="input-field">
         <label>Enter Label</label>
         <br />
         <input
@@ -59,7 +59,7 @@ export default function DateTimeInput({ formStyle }) {
         />
         <br />
         <hr className="mt-2 mb-2 " />
-      </form>
+      </div>
       <section className="preview-field">
         <h3 className="">Preview</h3>
         <FieldPreview

@@ -43,7 +43,7 @@ button::before {
   position: absolute;
   content: "";
   background: var(--color);
-  width: 150px;
+  width: 200px;
   height: 200px;
   z-index: -1;
   border-radius: 50%;

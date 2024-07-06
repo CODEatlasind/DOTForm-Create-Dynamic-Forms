@@ -23,7 +23,7 @@ export default function PasswordInput({ formStyle }) {
   formStyle.attr = attributes;
   return (
     <>
-      <form className="input-field">
+      <div className="input-field">
         <label>
           Enter Label Name
           <span className="text-red-700">*</span>
@@ -48,7 +48,7 @@ export default function PasswordInput({ formStyle }) {
         />
         <br />
         <hr className="mt-2 mb-2 " />
-      </form>
+      </div>
       <form className="preview-field ">
         <input
           type="text"

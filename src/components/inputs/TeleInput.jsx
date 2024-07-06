@@ -22,7 +22,7 @@ function TeleInput({ formStyle }) {
 
   return (
     <>
-      <form className="input-field ">
+      <div className="input-field ">
         <label>
           Enter Fiel label<span className="text-red-700">*</span>
         </label>
@@ -46,7 +46,7 @@ function TeleInput({ formStyle }) {
         />
         <br />
         <hr className="mt-2 mb-2 " />
-      </form>
+      </div>
       <section className="date-container">
         <FieldPreview id="9" type="tel" typos={typography} attr={attributes} />
       </section>

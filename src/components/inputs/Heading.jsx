@@ -21,7 +21,7 @@ export default function Heading({ formStyle }) {
 
   return (
     <>
-      <form className="input-field">
+      <div className="input-field">
         <label>Enter a Heading</label>
         <br />
         <input
@@ -31,7 +31,7 @@ export default function Heading({ formStyle }) {
           onChange={handleTypographyChange}
         />
         <br />
-      </form>
+      </div>
       {typography.label && (
         <section className="preview-field">
           <p>Preview</p>

@@ -19,7 +19,7 @@ export default function NumberInput({ formStyle }) {
   formStyle.attr = attributes;
   return (
     <>
-      <form className="input-field">
+      <div className="input-field">
         <label>
           Enter Field Label <span className="text-red-700">*</span>:
         </label>
@@ -44,7 +44,7 @@ export default function NumberInput({ formStyle }) {
         />
         <br />
         <hr className="mt-2 mb-2 " />
-      </form>
+      </div>
       <section className="preview-field">
         {typography.label !== "" ? (
           <>

@@ -24,7 +24,7 @@ export default function EmailInput({ formStyle }) {
   }, [formStyle, attributes]);
   return (
     <>
-      <form className="input-field">
+      <div className="input-field">
         <label>Enter Field Label</label>
         <br />
         <input
@@ -46,7 +46,7 @@ export default function EmailInput({ formStyle }) {
         />
         <br />
         <hr className="mt-2 mb-2 " />
-      </form>
+      </div>
       <section className="preview-field">
         <FieldPreview
           id="3"

@@ -7,7 +7,11 @@ export default function RadioButtonOutput(id, typos, attr) {
 
       {Object.values(attr).map((rip) => (
         <span key={rip.id}>
-          <Radio label={rip.label} name={typos.name} id={id} />
+          <Radio
+            label={rip.label}
+            name={typos.name}
+            id={id + "radio" + rip.id}
+          />
           <span>{rip.value}</span>
         </span>
       ))}
