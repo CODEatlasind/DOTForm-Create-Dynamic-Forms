@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Preview from "../output/FieldPreview";
 import PropTypes from "prop-types";
+
 import FieldPreview from "../output/FieldPreview";
 function TeleInput({ formStyle }) {
   const [typography, setTypography] = useState({

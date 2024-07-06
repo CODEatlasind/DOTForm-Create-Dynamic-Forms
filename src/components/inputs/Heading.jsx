@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+
 import FieldPreview from "../output/FieldPreview";
 
 export default function Heading({ formStyle }) {

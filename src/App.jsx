@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import FormBuilder from "./FormBuilder";
+import FormBuilder from "./components/FormBuilder";
+// import Test from "./components/Test";
 
-import ShareableForm from "./ShareableForm";
+import ShareableForm from "./components/ShareableForm";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+    // <Test />
   );
 }
 

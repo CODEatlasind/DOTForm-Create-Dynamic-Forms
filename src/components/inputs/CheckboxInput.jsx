@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import FieldPreview from "../output/FieldPreview";
 import PropTypes from "prop-types";
+import FieldPreview from "../output/FieldPreview";
 
 export default function CheckboxInput({ formStyle }) {
   const [typography, setTypography] = useState({
@@ -57,11 +57,11 @@ export default function CheckboxInput({ formStyle }) {
           type="text"
           name="value"
           value={rip.value}
-          placeholder="Enter the radio option"
+          placeholder="Enter the checkbox option"
           onChange={(e) => {
             handleChange(e, rip.id);
           }}
-        />
+        />{" "}
         <input
           type="checkbox"
           name="checked"
@@ -142,7 +142,7 @@ export default function CheckboxInput({ formStyle }) {
             )}
           </>
         ) : (
-          <small className="text-red-700">Fill Out Empty Fields</small>
+          <small className="text-red-700">Fill Out the Required Fields</small>
         )}
       </section>
     </>

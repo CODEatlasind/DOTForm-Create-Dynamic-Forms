@@ -1,13 +1,13 @@
-import TextFieldInput from "../inputs/TextFieldInput";
-import NumberInput from "../inputs/NumberInput";
-import DateTimeInput from "../inputs/DateTimeInput";
-import PasswordInput from "../inputs/PasswordInput";
 import CheckboxInput from "../inputs/CheckboxInput";
-import RadioButtonInput from "../inputs/RadioButtonInput";
-import TeleInput from "../inputs/TeleInput";
+import DateTimeInput from "../inputs/DateTimeInput";
 import EmailInput from "../inputs/EmailInput";
 import Heading from "../inputs/Heading";
 import LineBreak from "../inputs/LineBreak";
+import NumberInput from "../inputs/NumberInput";
+import PasswordInput from "../inputs/PasswordInput";
+import RadioButtonInput from "../inputs/RadioButtonInput";
+import TeleInput from "../inputs/TeleInput";
+import TextFieldInput from "../inputs/TextFieldInput";
 
 const formStyle = {
   typos: {},

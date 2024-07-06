@@ -146,7 +146,7 @@ export default function RadioButtonInput({ formStyle }) {
             )}
           </>
         ) : (
-          <small className="text-red-700">Fill Out Empty Fields</small>
+          <small className="text-red-700">Fill Out the Required Fields</small>
         )}
       </section>
     </>

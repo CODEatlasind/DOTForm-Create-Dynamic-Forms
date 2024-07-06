@@ -36,7 +36,7 @@ function FormAccordion({ onAdd }) {
         className={`form-accordion   ${
           showAcc ? "h-0 opacity-0  " : "  h-fit opacity-100"
         }  
-        lg:h-fit lg:opacity-100  pt-1 pb-3 px-1 rounded-md bg-dark-sec-blue z-50 `}
+        lg:h-fit lg:opacity-100  pt-1 pb-1 px-1 rounded-md bg-dark-sec-blue z-50 `}
       >
         <h1 className="accordion-title text-center font-semibold text-white uppercase">
           Accordion Menu
@@ -70,16 +70,35 @@ function FormAccordion({ onAdd }) {
                     />
                   }
 
-                  <button
-                    key={"Submit" + Element.id}
-                    type="submit"
-                    onClick={() => {
-                      onAdd(Element.id, Element.type, Element.formStyle);
-                    }}
-                    className="btn btn-add "
-                  >
-                    Add
-                  </button>
+                  <>
+                    <button
+                      key={"Submit" + Element.id}
+                      type="submit"
+                      onClick={() => {
+                        if (
+                          Element.type === "checkbox" ||
+                          Element.type === "radio"
+                        ) {
+                          if (
+                            Element.formStyle.typos.label !== "" &&
+                            Element.formStyle.typos.name !== ""
+                          ) {
+                            onAdd(Element.id, Element.type, Element.formStyle);
+                          }
+                        } else if (
+                          Element.type === "heading" ||
+                          Element.type === "heading"
+                        ) {
+                          if (Element.formStyle.typos.label !== "")
+                            onAdd(Element.id, Element.type, Element.formStyle);
+                        } else
+                          onAdd(Element.id, Element.type, Element.formStyle);
+                      }}
+                      className="btn btn-add "
+                    >
+                      Add
+                    </button>
+                  </>
                 </AccordionDetails>
               </Accordion>
             );

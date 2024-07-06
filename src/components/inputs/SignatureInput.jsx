@@ -1,24 +1,24 @@
 import { useState } from "react";
-import { useRef } from "react";
+// import { useRef } from "react";
 import SignatureCanvas from "react-signature-canvas";
 
 export default function SignatureInput() {
-  const sigCanvas = useRef(null);
+  const [sigCanvas, setSigCanvas] = useState();
   const [savedImage, setSavedImage] = useState();
 
   const handleNew = () => {
-    sigCanvas.current.clear();
+    sigCanvas.clear();
     // sigCanvas.current.getSignaturePad();
   };
   const handleSave = () => {
-    const dataURL = sigCanvas.current.getSignaturePad().toDataURL("image/png");
+    const dataURL = sigCanvas.getTrimmedCanvas().toDataURL("image/png");
     // console.log(dataURL);
     setSavedImage(dataURL);
   };
 
   return (
-    <div className="">
-      <div className="border-double m-auto">
+    <>
+      <section className="border-dashed border-2 border-gray-900 ">
         <SignatureCanvas
           penColor="green"
           canvasProps={{
@@ -26,14 +26,17 @@ export default function SignatureInput() {
             height: 200,
             className: "signature-Canvas bg-slate-50 rounded-md ",
           }}
-          ref={sigCanvas}
+          ref={(ref) => {
+            setSigCanvas(ref);
+          }}
         />
-      </div>
-      <div>
+
         <button onClick={handleNew}>Clear</button>
         <button onClick={handleSave}>Save</button>
-      </div>
-      <img src={savedImage}></img>
-    </div>
+      </section>
+      <section>
+        <img src={savedImage}></img>
+      </section>
+    </>
   );
 }

@@ -51,7 +51,9 @@ export default function NumberInput({ formStyle }) {
             <h3>Preview</h3>
             <FieldPreview type="number" typos={typography} attr={attributes} />
           </>
-        ) : null}
+        ) : (
+          <small className="text-red-700">Fill Out the Required Fields</small>
+        )}
       </section>
 
       <br />

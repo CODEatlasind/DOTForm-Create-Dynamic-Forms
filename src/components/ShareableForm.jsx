@@ -7,8 +7,11 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 // Designed Conmponents
+
 import FieldPreview from "./output/FieldPreview";
 import RequiredFields from "./config/RequiredFields";
+import PdfConfig from "./config/PdfConfig";
+import { Box, Modal, Typography } from "@mui/material";
 
 // import generatePDF from "react-to-pdf";
 // import PdfConfig from "./config/PdfConfig";
@@ -19,6 +22,9 @@ export default function ShareableForm() {
   const [heading, setHeading] = useState("My Form");
   const [infoToSend, setInfoToSend] = useState({});
   const formRef = useRef();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     const fetchFormConfig = async () => {
@@ -86,10 +92,10 @@ export default function ShareableForm() {
     const input = formRef.current;
 
     try {
-      const canvas = await html2canvas(input);
+      const canvas = await html2canvas(input, PdfConfig);
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      pdf.addImage(imgData, "JPEG", 0, 0);
+      pdf.addImage(imgData, "JPEG");
       const pdfDataUri = pdf.output("datauristring").slice(51);
 
       return pdfDataUri;
@@ -100,8 +106,8 @@ export default function ShareableForm() {
   };
 
   const handleInfoChange = async () => {
-    var recpient_name = formRef.current.querySelector(`[id="-1"]`).value;
-    var recpient_email = formRef.current.querySelector(`[id="0"]`).value;
+    var recpient_name = formRef.current.querySelector(`[id="-2"]`).value;
+    var recpient_email = formRef.current.querySelector(`[id="-1"]`).value;
     var submissionName = recpient_name + "_Submission";
     const pdfBase64 = await handleGeneratePDF();
     setInfoToSend({
@@ -124,13 +130,16 @@ export default function ShareableForm() {
       alert("Please fill out all required fields");
     }
   };
-
+  const toggleSignComp = () => {};
   return (
-    <div className="form-share-container relative  bg-dark-body-blue">
+    <div
+      className="form-share-container relative  bg-dark-body-blue "
+      ref={formRef}
+    >
       <form
         className=" bg-white page-shared m-auto text-center"
         // onSubmit={handleSubmit}
-        ref={formRef}
+        // ref={formRef}
       >
         <Link
           to="/"
@@ -170,6 +179,30 @@ export default function ShareableForm() {
                 />
               );
             })}
+        </div>
+        <div className="signature-container">
+          <button
+            type="button"
+            className="toggle-sign-modal"
+            onClick={toggleSignComp}
+          ></button>
+          <Modal
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="keep-mounted-modal-title"
+            aria-describedby="keep-mounted-modal-description"
+          >
+            <Box>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                E-Signature Field
+              </Typography>
+            </Box>
+          </Modal>
         </div>
       </form>
       <div className="form-control-btn relative p-2 justify-center flex flex-wrap gap-6 ">

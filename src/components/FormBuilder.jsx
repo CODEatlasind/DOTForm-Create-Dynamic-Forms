@@ -28,6 +28,7 @@ export default function FormBuilder() {
 
   const handleReset = () => {
     setFormFields([]);
+    window.location.reload(true);
   };
   const handleSave = () => {
     const jsonString = JSON.stringify(formFields);

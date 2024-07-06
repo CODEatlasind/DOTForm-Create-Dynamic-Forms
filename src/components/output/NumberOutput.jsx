@@ -9,8 +9,6 @@ export default function NumberOutput(id, typos, attr) {
         type="number"
         label={typos.label}
         variant="outlined"
-        autoComplete={attr.autoComplete}
-        required={attr.required}
         size="small"
       />
       {typos.smallDescription && (
