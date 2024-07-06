@@ -104,7 +104,7 @@ export default function ShareableForm() {
       const canvas = await html2canvas(input, PdfConfig);
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      pdf.addImage(imgData, "JPEG");
+      pdf.addImage(imgData, "JPEG", 0, 0);
       const pdfDataUri = pdf.output("datauristring").slice(51);
 
       return pdfDataUri;
@@ -139,6 +139,7 @@ export default function ShareableForm() {
     const idsValid = formValidation(formConfig); // Validate the formConfig fields
     if (idsValid) {
       await handleInfoChange();
+      alert("Response was submitted successfully!!");
     } else {
       alert("Please fill out all required fields");
     }
