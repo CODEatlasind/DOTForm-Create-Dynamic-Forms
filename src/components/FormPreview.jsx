@@ -71,7 +71,7 @@ function FormPreview({ formFields, onReset }) {
 
   return (
     <div className="form-preview-container relative text-center  ">
-      <div className="link-box mx-5 my-2 py-2 px-2 border-cyan-800 rounded bg-white ">
+      <div className="link-box mx-2 my-2 py-2 px-2 border-cyan-800 rounded bg-white ">
         {formId ? (
           <>
             <Link to={"/forms/" + formId} className="">

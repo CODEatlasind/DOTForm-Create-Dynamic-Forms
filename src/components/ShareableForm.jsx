@@ -227,7 +227,7 @@ export default function ShareableForm() {
               alt="e-Sign Will Appear Here"
               id="e-Signatute"
               className="object-scale-down absolute bottom-2 right-2"
-              style={{ scale: "0.25" }}
+              style={{ scale: "0.35" }}
             ></img>
           )}
           {!signed && (
