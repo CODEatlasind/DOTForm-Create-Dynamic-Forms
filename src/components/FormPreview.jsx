@@ -74,7 +74,12 @@ function FormPreview({ formFields, onReset }) {
       <div className="link-box mx-2 my-2 py-2 px-2 border-cyan-800 rounded bg-white ">
         {formId ? (
           <>
-            <Link to={"/forms/" + formId} className="">
+            <Link
+              to={"/forms/" + formId}
+              className=""
+              target="_blank"
+              rel="noreferrer"
+            >
               {formLink}
               <ContentPasteIcon
                 className="cursor-pointer float-end"

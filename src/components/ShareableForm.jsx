@@ -6,7 +6,7 @@ import identityFields from "./config/compulsaryFields";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Box, Modal, Typography } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+
 // Designed Conmponents
 import FieldPreview from "./output/FieldPreview";
 import RequiredFields from "./config/RequiredFields";
