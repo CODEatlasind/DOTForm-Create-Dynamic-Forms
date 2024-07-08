@@ -22,7 +22,7 @@ export default function EmailOutput(id, typos, attr) {
         autoComplete={attr.autoComplete}
         required={attr.required}
         size="small"
-        sx={{ width: 300 }}
+        sx={{ width: id === "3" ? 200 : 300 }}
       />
       {typos.smallDescription && (
         <>

@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import FieldPreview from "../output/FieldPreview";
 
-export default function CheckboxInput({ formStyle }) {
+export default function CheckboxInput({ id, type, onSubCompletion }) {
   const [typography, setTypography] = useState({
     name: "",
     label: "",
     smallDescription: "",
   });
 
-  const [checkedContent, setCheckedContent] = useState({});
+  const [attributes, setCheckedContent] = useState({});
 
   const handleTypographicalChange = (e) => {
     const { name, value } = e.target;
@@ -17,7 +17,7 @@ export default function CheckboxInput({ formStyle }) {
   };
 
   const handleAddCheckboxButton = () => {
-    const newId = Object.keys(checkedContent).length + 1;
+    const newId = Object.keys(attributes).length + 1;
     const newCheckbox = {
       id: newId,
       value: "",
@@ -31,12 +31,12 @@ export default function CheckboxInput({ formStyle }) {
     }));
   };
 
-  useEffect(() => {
-    formStyle.typos = typography;
-  }, [formStyle, typography]);
-  useEffect(() => {
-    formStyle.attr = checkedContent;
-  }, [formStyle, checkedContent]);
+  // useEffect(() => {
+  //   formStyle.typos = typography;
+  // }, [ typography]);
+  // useEffect(() => {
+  //   formStyle.attr = checkedContent;
+  // }, [checkedContent]);
 
   const handleChange = (e, id) => {
     const { name, value, type, checked } = e.target;
@@ -49,7 +49,7 @@ export default function CheckboxInput({ formStyle }) {
     }));
   };
 
-  const checkboxTextField = Object.values(checkedContent).map((rip) => {
+  const checkboxTextField = Object.values(attributes).map((rip) => {
     return (
       <div key={"checkField" + rip.id}>
         <span>{rip.id}:</span>
@@ -85,7 +85,7 @@ export default function CheckboxInput({ formStyle }) {
           type="text"
           name="label"
           value={typography.label}
-          placeholder="Enter Label"
+          placeholder="Enter Field Label First"
           onChange={handleTypographicalChange}
           required
         ></input>
@@ -98,7 +98,7 @@ export default function CheckboxInput({ formStyle }) {
           type="text"
           name="name"
           value={typography.name}
-          placeholder="Enter Category First"
+          placeholder="Enter Field Category Next"
           onChange={handleTypographicalChange}
           required
         ></input>
@@ -109,7 +109,7 @@ export default function CheckboxInput({ formStyle }) {
           type="text"
           name="smallDescription"
           value={typography.smallDescription}
-          placeholder="Enter Description"
+          placeholder="Enter Field Description"
           onChange={handleTypographicalChange}
         ></input>
         <br />
@@ -131,15 +131,25 @@ export default function CheckboxInput({ formStyle }) {
       <section className="preview-field">
         {typography.label !== "" && typography.name !== "" ? (
           <>
-            <h3>Preview</h3>
-            {checkedContent && Object.keys(checkedContent).length > 0 && (
+            <small>Preview</small>
+            {attributes && Object.keys(attributes).length > 0 && (
               <FieldPreview
                 id="1"
                 type="checkbox"
                 typos={typography}
-                attr={checkedContent}
+                attr={attributes}
               />
             )}
+            <button
+              key={"Submit" + Element.id}
+              type="button"
+              onClick={() => {
+                onSubCompletion(id, type, typography, attributes);
+              }}
+              className="btn btn-add "
+            >
+              Add
+            </button>
           </>
         ) : (
           <small className="text-red-700">Fill Out the Required Fields</small>
@@ -149,8 +159,7 @@ export default function CheckboxInput({ formStyle }) {
   );
 }
 CheckboxInput.propTypes = {
-  formStyle: PropTypes.shape({
-    typos: PropTypes.object,
-    attr: PropTypes.object,
-  }),
+  id: PropTypes.number,
+  type: PropTypes.string,
+  onSubCompletion: PropTypes.func,
 };

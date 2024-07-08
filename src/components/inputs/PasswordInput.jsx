@@ -2,7 +2,7 @@ import { useState } from "react";
 import FieldPreview from "../output/FieldPreview";
 import PropTypes from "prop-types";
 
-export default function PasswordInput({ formStyle }) {
+export default function PasswordInput({ id, type, onSubCompletion }) {
   // !CHECK OUT THIS ELEMENT
 
   const [typography, setTypography] = useState({
@@ -19,22 +19,19 @@ export default function PasswordInput({ formStyle }) {
   // const handleChange = (e) => {
   //   setAttributes(e.target.value);
   // };
-  formStyle.typos = typography;
-  formStyle.attr = attributes;
+  // formStyle.typos = typography;
+  // formStyle.attr = attributes;
   return (
     <>
       <div className="input-field">
-        <label>
-          Enter Label Name
-          <span className="text-red-700">*</span>
-        </label>
+        <label>Enter Label</label>
         <br />
         <input
           type="text"
           name="label"
           value={typography.label}
           onChange={handleTypographyChange}
-          placeholder="Enter label name first"
+          placeholder="Enter Field Label"
         />
         <br />
         <label>Enter Description</label>
@@ -44,7 +41,7 @@ export default function PasswordInput({ formStyle }) {
           name="smallDescription"
           value={typography.smallDescription}
           onChange={handleTypographyChange}
-          placeholder=""
+          placeholder="Enter Field Description"
         />
         <br />
         <hr className="mt-2 mb-2 " />
@@ -63,16 +60,31 @@ export default function PasswordInput({ formStyle }) {
           autoComplete="username"
           className="hidden"
         ></input>
-
-        <FieldPreview type="password" typos={typography} attr={attributes} />
+        <div className="preview-field">
+          <small>Preview</small>
+          <FieldPreview
+            id="7"
+            type="password"
+            typos={typography}
+            attr={attributes}
+          />
+          <button
+            key={"Submit" + Element.id}
+            type="button"
+            onClick={() => {
+              onSubCompletion(id, type, typography, attributes);
+            }}
+            className="btn btn-add "
+          >
+            Add
+          </button>
+        </div>
       </form>
-      <br />
     </>
   );
 }
 PasswordInput.propTypes = {
-  formStyle: PropTypes.shape({
-    typos: PropTypes.object,
-    attr: PropTypes.object,
-  }),
+  id: PropTypes.number,
+  type: PropTypes.string,
+  onSubCompletion: PropTypes.func.isRequired,
 };

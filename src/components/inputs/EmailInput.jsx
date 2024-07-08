@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FieldPreview from "../output/FieldPreview";
 import PropTypes from "prop-types";
 
-export default function EmailInput({ formStyle }) {
+export default function EmailInput({ id, type, onSubCompletion }) {
   const [attributes, setAttributes] = useState({});
   const [typography, setTypography] = useState({
     label: "",
@@ -16,23 +16,23 @@ export default function EmailInput({ formStyle }) {
   const handleChange = (e) => {
     setAttributes(e.target.value);
   };
-  useEffect(() => {
-    formStyle.typos = typography;
-  }, [formStyle, typography]);
-  useEffect(() => {
-    formStyle.attr = attributes;
-  }, [formStyle, attributes]);
+  // useEffect(() => {
+  //   formStyle.typos = typography;
+  // }, [formStyle, typography]);
+  // useEffect(() => {
+  //   formStyle.attr = attributes;
+  // }, [formStyle, attributes]);
   return (
     <>
       <div className="input-field">
-        <label>Enter Field Label</label>
+        <label>Enter Label</label>
         <br />
         <input
           type="text"
           name="label"
           value={typography.label}
           onChange={handleTypographicalChange}
-          placeholder="Enter Field Label "
+          placeholder="Enter Field Label First"
         />
         <br />
         <label>Enter Description</label>
@@ -42,25 +42,35 @@ export default function EmailInput({ formStyle }) {
           name="smallDescription"
           value={typography.smallDescription}
           onChange={handleTypographicalChange}
-          placeholder="Enter Field desciption"
+          placeholder="Enter Field Desciption"
         />
         <br />
         <hr className="mt-2 mb-2 " />
       </div>
       <section className="preview-field">
+        <small>Preview</small>
         <FieldPreview
           id="3"
           type="email"
           typos={typography}
           attr={attributes}
         />
+        <button
+          key={"Submit" + Element.id}
+          type="button"
+          onClick={() => {
+            onSubCompletion(id, type, typography, attributes);
+          }}
+          className="btn btn-add "
+        >
+          Add
+        </button>
       </section>
     </>
   );
 }
 EmailInput.propTypes = {
-  formStyle: PropTypes.shape({
-    typos: PropTypes.object,
-    attr: PropTypes.object,
-  }),
+  id: PropTypes.number,
+  type: PropTypes.string,
+  onSubCompletion: PropTypes.func.isRequired,
 };

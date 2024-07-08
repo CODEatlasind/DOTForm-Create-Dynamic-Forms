@@ -2,7 +2,7 @@ import { useState } from "react";
 import FieldPreview from "../output/FieldPreview";
 import PropTypes from "prop-types";
 
-function TextFieldInput({ formStyle }) {
+function TextFieldInput({ id, type, onSubCompletion }) {
   const [typography, setTypography] = useState({
     label: "",
     smallDescription: "",
@@ -23,18 +23,22 @@ function TextFieldInput({ formStyle }) {
     const val = type === "checkbox" ? checked : value;
     setAttributes({ ...attributes, [name]: val });
   };
-  formStyle.typos = typography;
-  formStyle.attr = attributes;
+  // formStyle.typos = typography;
+  // formStyle.attr = attributes;
   return (
     <>
       <div>
-        <label>Enter Label</label>
+        <label>
+          Enter Label<span className="text-red-700">*</span>
+        </label>
         <br />
         <input
           type="text"
           name="label"
           value={typography.label}
+          placeholder="Enter Field Label First"
           onChange={handleChange}
+          required
         />
         <br />
         <label>Enter Description</label>
@@ -44,6 +48,7 @@ function TextFieldInput({ formStyle }) {
           name="smallDescription"
           value={typography.smallDescription}
           onChange={handleChange}
+          placeholder="Enter Field Description"
         />
         <br />
 
@@ -62,6 +67,7 @@ function TextFieldInput({ formStyle }) {
           name="minLength"
           value={attributes.minLength}
           onChange={handleAttributeChange}
+          placeholder="Minimum Text Limit"
         />
         <br />
         <label>Max Length:</label>
@@ -71,6 +77,7 @@ function TextFieldInput({ formStyle }) {
           name="maxLength"
           value={attributes.maxLength}
           onChange={handleAttributeChange}
+          placeholder="Maximum Text Limit"
         />
         <br />
         {/* ! Pattern to be added */}
@@ -83,16 +90,34 @@ function TextFieldInput({ formStyle }) {
           onChange={handleAttributeChange}
         /> */}
       </div>
-      <hr />
-      <h3>Preview:</h3>
-      <FieldPreview
-        key="text-input"
-        type="text"
-        typos={typography}
-        attr={attributes}
-        onTypoChange={handleChange}
-        onAttributeChange={handleAttributeChange}
-      />
+      <hr className="mt-2 mb-2 " />
+      <section className="preview-field">
+        {typography.label !== "" ? (
+          <>
+            <small>Preview</small>
+            <FieldPreview
+              id="10"
+              type="text"
+              typos={typography}
+              attr={attributes}
+              onTypoChange={handleChange}
+              onAttributeChange={handleAttributeChange}
+            />
+            <button
+              key={"Submit" + Element.id}
+              type="button"
+              onClick={() => {
+                onSubCompletion(id, type, typography, attributes);
+              }}
+              className="btn btn-add "
+            >
+              Add
+            </button>
+          </>
+        ) : (
+          <small className="text-red-700">Fill Out the Required Field</small>
+        )}
+      </section>
     </>
   );
 }
@@ -129,8 +154,7 @@ export default TextFieldInput;
           </label> */
 }
 TextFieldInput.propTypes = {
-  formStyle: PropTypes.shape({
-    typos: PropTypes.object,
-    attr: PropTypes.object,
-  }),
+  id: PropTypes.number,
+  type: PropTypes.string,
+  onSubCompletion: PropTypes.func.isRequired,
 };

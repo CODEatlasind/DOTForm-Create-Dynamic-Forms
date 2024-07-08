@@ -89,6 +89,7 @@ button:active {
     transition-timing-function: ease, ease;
     transition-delay: 0s, 0s;
     text-align: center;
+    
   }
   input:focus {
     box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px,

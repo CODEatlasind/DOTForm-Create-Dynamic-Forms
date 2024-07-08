@@ -1,26 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FieldPreview from "../output/FieldPreview";
 import PropTypes from "prop-types";
 
-var today = new Date();
-var yyyy = today.getFullYear();
-var mm = today.getMonth() + 1;
-var dd = today.getDate();
-if (mm < 10) {
-  mm = "0" + mm;
-}
-if (dd < 10) {
-  dd = "0" + dd;
-}
-var formattedDate = yyyy + "-" + mm + "-" + dd;
-export default function DateTimeInput({ formStyle }) {
+export default function DateTimeInput({ id, type, onSubCompletion }) {
   const [typography, setTypography] = useState({
     label: "",
     smallDescription: "",
   });
-  const [attributes, setAttributes] = useState({ date: formattedDate });
-
-  // Format the date as YYYY-MM-DD
+  const [attributes, setAttributes] = useState({});
 
   const handleTypographicalChange = (e) => {
     const { name, value } = e.target;
@@ -30,12 +17,6 @@ export default function DateTimeInput({ formStyle }) {
     setAttributes(e.target.value);
   };
 
-  useEffect(() => {
-    formStyle.typos = typography;
-  }, [formStyle, typography]);
-  useEffect(() => {
-    formStyle.attr = attributes;
-  }, [formStyle, attributes]);
   return (
     <>
       <div className="input-field">
@@ -46,22 +27,23 @@ export default function DateTimeInput({ formStyle }) {
           name="label"
           value={typography.label}
           onChange={handleTypographicalChange}
-          placeholder="Enter label name first"
+          placeholder="Enter Field Label First"
         />
         <br />
         <label>Enter Description</label>
+        <br />
         <input
           type="text"
           name="smallDescription"
           value={typography.smallDescription}
           onChange={handleTypographicalChange}
-          placeholder="Enter label name first"
+          placeholder="Enter Field Description"
         />
         <br />
         <hr className="mt-2 mb-2 " />
       </div>
       <section className="preview-field">
-        <h3 className="">Preview</h3>
+        <small>Preview</small>  
         <FieldPreview
           id={"2"}
           type="date"
@@ -71,13 +53,22 @@ export default function DateTimeInput({ formStyle }) {
           onAttributeChange={handleChange}
         />
       </section>
+      <button
+        key={"Submit" + Element.id}
+        type="button"
+        onClick={() => {
+          onSubCompletion(id, type, typography, attributes);
+        }}
+        className="btn btn-add "
+      >
+        Add
+      </button>
     </>
   );
 }
 
 DateTimeInput.propTypes = {
-  formStyle: PropTypes.shape({
-    typos: PropTypes.object,
-    attr: PropTypes.object,
-  }),
+  id: PropTypes.number,
+  type: PropTypes.string,
+  onSubCompletion: PropTypes.func.isRequired,
 };

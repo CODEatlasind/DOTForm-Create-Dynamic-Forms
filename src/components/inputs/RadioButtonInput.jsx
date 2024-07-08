@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FieldPreview from "../output/FieldPreview";
 import PropTypes from "prop-types";
 
-export default function RadioButtonInput({ formStyle }) {
+export default function RadioButtonInput({ id, type, onSubCompletion }) {
   const [typography, setTypography] = useState({
     name: "",
     label: "",
@@ -26,12 +26,12 @@ export default function RadioButtonInput({ formStyle }) {
       [newId]: newRadio,
     }));
   };
-  useEffect(() => {
-    formStyle.typos = typography;
-  }, [formStyle, typography]);
-  useEffect(() => {
-    formStyle.attr = attributes;
-  }, [formStyle, attributes]);
+  // useEffect(() => {
+  //   formStyle.typos = typography;
+  // }, [formStyle, typography]);
+  // useEffect(() => {
+  //   formStyle.attr = attributes;
+  // }, [formStyle, attributes]);
 
   const handleChange = (e, id) => {
     const { name, value, type, checked } = e.target;
@@ -86,27 +86,27 @@ export default function RadioButtonInput({ formStyle }) {
     <>
       <form className="input-field ">
         <label>
-          Enter Field Label<span className="text-red-700">*</span>
+          Enter Label<span className="text-red-700">*</span>
         </label>
         <br />
         <input
           type="text"
           name="label"
           value={typography.label}
-          placeholder="Enter Label"
+          placeholder="Enter Field Label First"
           onChange={handleTypographicalChange}
           required
         ></input>
         <br />
         <label>
-          Enter Category Name<span className="text-red-700">*</span>
+          Enter Category<span className="text-red-700">*</span>
         </label>
         <br />
         <input
           type="text"
           name="name"
           value={typography.name}
-          placeholder="Enter Category First"
+          placeholder="Enter Field Category Next"
           onChange={handleTypographicalChange}
           required
         ></input>
@@ -118,7 +118,7 @@ export default function RadioButtonInput({ formStyle }) {
           type="text"
           name="smallDescription"
           value={typography.smallDescription}
-          placeholder="Enter Description"
+          placeholder="Enter Field Description"
           onChange={handleTypographicalChange}
         ></input>
         <br />
@@ -140,10 +140,26 @@ export default function RadioButtonInput({ formStyle }) {
       <section className="preview-field">
         {typography.label !== "" && typography.name !== "" ? (
           <>
-            <h3>Preview:</h3>
+            <small>Preview</small>
+            <br />
             {attributes && Object.keys(attributes).length > 0 && (
-              <FieldPreview type="radio" typos={typography} attr={attributes} />
+              <FieldPreview
+                id="8"
+                type="radio"
+                typos={typography}
+                attr={attributes}
+              />
             )}
+            <button
+              key={"Submit" + Element.id}
+              type="button"
+              onClick={() => {
+                onSubCompletion(id, type, typography, attributes);
+              }}
+              className="btn btn-add "
+            >
+              Add
+            </button>
           </>
         ) : (
           <small className="text-red-700">Fill Out the Required Fields</small>
@@ -153,8 +169,7 @@ export default function RadioButtonInput({ formStyle }) {
   );
 }
 RadioButtonInput.propTypes = {
-  formStyle: PropTypes.shape({
-    typos: PropTypes.object,
-    attr: PropTypes.object,
-  }),
+  id: PropTypes.number,
+  type: PropTypes.string,
+  onSubCompletion: PropTypes.func.isRequired,
 };

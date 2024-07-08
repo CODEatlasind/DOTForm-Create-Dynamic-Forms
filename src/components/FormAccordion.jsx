@@ -15,6 +15,9 @@ import fieldConfig from "./config/fieldConfig";
 function FormAccordion({ onAdd }) {
   const [showAcc, setShowAcc] = useState(true);
 
+  // const handleComponentAddition = (compid, compType, compTypo, compAttr) => {
+  //   onAdd(compid, compType, compTypo, compAttr);
+  // };
   return (
     <div className="form-option-accordion ml-4 mr-4 text-center lg:text-justify  max-w-full lg:max-w-72">
       <h1 className="flex m-1 lg:mb-0 lg:pb-6 lg:pt-0 gap-2 items-center text-center justify-center">
@@ -66,39 +69,38 @@ function FormAccordion({ onAdd }) {
                     <Element.component
                       key={"Component" + Element.id}
                       id={Element.id}
-                      formStyle={Element.formStyle}
+                      type={Element.type}
+                      onSubCompletion={onAdd}
                     />
                   }
 
-                  <>
-                    <button
-                      key={"Submit" + Element.id}
-                      type="submit"
-                      onClick={() => {
+                  {/* <button
+                    key={"Submit" + Element.id}
+                    type="submit"
+                    onClick={() => {
+                      if (
+                        Element.type === "checkbox" ||
+                        Element.type === "radio"
+                      ) {
                         if (
-                          Element.type === "checkbox" ||
-                          Element.type === "radio"
+                          Element.formStyle.typos.label !== "" &&
+                          Element.formStyle.typos.name !== ""
                         ) {
-                          if (
-                            Element.formStyle.typos.label !== "" &&
-                            Element.formStyle.typos.name !== ""
-                          ) {
-                            onAdd(Element.id, Element.type, Element.formStyle);
-                          }
-                        } else if (
-                          Element.type === "heading" ||
-                          Element.type === "heading"
-                        ) {
-                          if (Element.formStyle.typos.label !== "")
-                            onAdd(Element.id, Element.type, Element.formStyle);
-                        } else
                           onAdd(Element.id, Element.type, Element.formStyle);
-                      }}
-                      className="btn btn-add "
-                    >
-                      Add
-                    </button>
-                  </>
+                        }
+                      } else if (
+                        Element.type === "heading" ||
+                        Element.type === "heading"
+                      ) {
+                        if (Element.formStyle.typos.label !== "")
+                          onAdd(Element.id, Element.type, Element.formStyle);
+                      } else onAdd(Element.id, Element.type, Element.formStyle);
+                    }}
+                    className="btn btn-add "
+                  > 
+                    Add
+                  </button>
+                  */}
                 </AccordionDetails>
               </Accordion>
             );
