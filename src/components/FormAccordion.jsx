@@ -16,7 +16,7 @@ function FormAccordion({ onAdd }) {
   const [showAcc, setShowAcc] = useState(true);
 
   return (
-    <div className="form-option-accordion ml-4 mr-4 text-center lg:text-justify h-fit max-w-full lg:max-w-72">
+    <div className="form-option-accordion ml-4 mr-4 text-center lg:text-justify  max-w-full lg:max-w-72">
       <h1 className="flex m-1 lg:mb-0 lg:pb-6 lg:pt-0 gap-2 items-center text-center justify-center">
         <button
           type="button"
@@ -36,7 +36,7 @@ function FormAccordion({ onAdd }) {
         className={`form-accordion   ${
           showAcc ? "h-0 opacity-0  " : "  h-fit opacity-100"
         }  
-        lg:h-fit lg:opacity-100 m-1  pt-1 pb-1 px-1 rounded-md bg-dark-sec-blue z-50 w-96 lg:w-auto `}
+        lg:h-fit lg:opacity-100 m-1  pt-1 pb-1 px-1 rounded-md bg-dark-sec-blue z-50  `}
       >
         <h1 className="accordion-title text-center font-semibold text-white uppercase">
           Accordion Menu

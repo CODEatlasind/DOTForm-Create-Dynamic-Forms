@@ -1,6 +1,6 @@
 .page,
 .page-shared {
-  width: 95vw;
+  width: 90vw;
   max-width: 19cm;
   min-height: 29.7cm;
 
@@ -42,5 +42,5 @@
   transition: scale 0s, opacity 0.25s ease-out;
 }
 .link-box {
-  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);  
+  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
 }
