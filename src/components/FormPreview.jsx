@@ -76,27 +76,29 @@ function FormPreview({ formFields, onReset }) {
           <>
             <Link
               to={"/forms/" + formId}
-              className=""
+              className="underline to-blue-500"
               target="_blank"
               rel="noreferrer"
             >
-              {formLink}
-              <ContentPasteIcon
-                className="cursor-pointer float-end"
-                onClick={() => {
-                  navigator.clipboard.writeText(formLink);
-                }}
-              />
+              {formLink}{" "}
             </Link>
+            <ContentPasteIcon
+              className="cursor-pointer float-end"
+              onClick={() => {
+                navigator.clipboard.writeText(formLink);
+              }}
+            />
           </>
         ) : (
-          <p className="Alt-Link-text">Generated link appears here</p>
+          <p className="Alt-Link-text font-semibold">
+            Generated link appears here
+          </p>
         )}
       </div>
       <form className=" bg-white page  text-center" ref={formRef}>
         <header>
           <input
-            className="preview-header text-center font-semibold text-3xl w-80 pb-5"
+            className="preview-header text-center font-semibold text-3xl w-64 pb-5"
             onChange={handleTitleChange}
             id="form-title"
             value={title == "Create Dynamic Forms" ? "My Form" : title}

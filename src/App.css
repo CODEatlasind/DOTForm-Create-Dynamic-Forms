@@ -41,3 +41,6 @@
 .form-accordion {
   transition: scale 0s, opacity 0.25s ease-out;
 }
+.link-box {
+  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);  
+}

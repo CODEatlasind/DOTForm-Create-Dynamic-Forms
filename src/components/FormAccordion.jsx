@@ -15,11 +15,8 @@ import fieldConfig from "./config/fieldConfig";
 function FormAccordion({ onAdd }) {
   const [showAcc, setShowAcc] = useState(true);
 
-  // const handleComponentAddition = (compid, compType, compTypo, compAttr) => {
-  //   onAdd(compid, compType, compTypo, compAttr);
-  // };
   return (
-    <div className="form-option-accordion ml-4 mr-4 text-center lg:text-justify  max-w-full lg:max-w-72">
+    <div className="form-option-accordion ml-4 mr-4 text-center lg:text-justify h-fit max-w-full lg:max-w-72">
       <h1 className="flex m-1 lg:mb-0 lg:pb-6 lg:pt-0 gap-2 items-center text-center justify-center">
         <button
           type="button"
@@ -30,7 +27,7 @@ function FormAccordion({ onAdd }) {
         >
           ⇊
         </button>
-        <span className="form-builer-title  font-bold text-4xl text-cyan-100">
+        <span className="form-builer-title  font-bold text-4xl text-sky-900 dark:text-cyan-100">
           DOTForm
         </span>
       </h1>
@@ -39,7 +36,7 @@ function FormAccordion({ onAdd }) {
         className={`form-accordion   ${
           showAcc ? "h-0 opacity-0  " : "  h-fit opacity-100"
         }  
-        lg:h-fit lg:opacity-100 m-1  pt-1 pb-1 px-1 rounded-md bg-dark-sec-blue z-50 `}
+        lg:h-fit lg:opacity-100 m-1  pt-1 pb-1 px-1 rounded-md bg-dark-sec-blue z-50 w-96 lg:w-auto `}
       >
         <h1 className="accordion-title text-center font-semibold text-white uppercase">
           Accordion Menu
