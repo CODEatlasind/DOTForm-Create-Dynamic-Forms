@@ -8,9 +8,9 @@ export default function TeleOutput(id, typos, attr) {
 
       <input type="tel" id={id} />
 
+      <br />
       {typos.smallDescription && (
         <>
-          <br />
           <small>{typos.smallDescription}</small>
         </>
       )}

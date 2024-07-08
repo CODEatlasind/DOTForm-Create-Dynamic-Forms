@@ -19,8 +19,8 @@ export default function EmailOutput(id, typos, attr) {
         id={id}
         type="email"
         label={typos.label != "" ? typos.label + " Email" : "Email"}
-        autoComplete={attr.autoComplete}
-        required={attr.required}
+        autoComplete={attr?.autoComplete || "off"}
+        required={attr?.required || false}
         size="small"
         sx={{ width: id === "3" ? 200 : 300 }}
       />

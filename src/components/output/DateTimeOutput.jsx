@@ -8,9 +8,9 @@ export default function DateTimeOutput(id, typos, attr) {
       </label>
 
       <TextField type="date" id={id} size="small" />
+      <br />
       {typos.smallDescription && (
         <>
-          <br />
           <small>{typos.smallDescription}</small>
         </>
       )}
