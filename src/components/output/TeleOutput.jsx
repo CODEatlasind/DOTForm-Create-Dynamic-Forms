@@ -1,13 +1,9 @@
 export default function TeleOutput(id, typos, attr) {
   return (
-    <div
-      key={"Telephone" + id}
-      className="flex gap-2 justify-center items-center"
-    >
+    <div key={"Telephone" + id} className="">
       <label>{typos.label + " Ph No.: "}</label>
 
-      <input type="tel" id={id} />
-
+      <input type="tel" id={id} className="border-zinc-300 border-2 rounded" />
       <br />
       {typos.smallDescription && (
         <>
