@@ -2,7 +2,6 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useState, useRef, useEffect } from "react";
-import identityFields from "./config/compulsaryFields";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Box, Modal, Typography } from "@mui/material";
@@ -10,7 +9,8 @@ import { Box, Modal, Typography } from "@mui/material";
 // Designed Conmponents
 import FieldPreview from "./output/FieldPreview";
 import RequiredFields from "./config/RequiredFields";
-import PdfConfig from "./config/PdfConfig";
+
+import identityFields from "./config/compulsaryFields";
 import SignatureInput from "./inputs/SignatureInput";
 
 // !Add secure method for url
@@ -85,7 +85,6 @@ export default function ShareableForm() {
   if (!formConfig) {
     return <div>Loading...</div>;
   }
-  // console.log(formConfig);
 
   const formValidation = (fieldset) => {
     return fieldset.every((field) => {
@@ -99,12 +98,34 @@ export default function ShareableForm() {
 
   const handleGeneratePDF = async () => {
     const input = formRef.current;
+    const scale = 2;
+    const padding = 0;
+    const PdfConfig = {
+      scale: scale,
+      useCORS: true,
+      logging: true,
+      allowTaint: false,
+      x: -padding,
+      y: -padding,
+      width: input.scrollWidth + padding * 2,
+      height: input.scrollHeight + padding * 2,
+
+      removeContainer: true,
+      backgroundColor: null,
+      // imageTimeout: 15000,
+    };
 
     try {
       const canvas = await html2canvas(input, PdfConfig);
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      pdf.addImage(imgData, "JPEG", 0, 0);
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: [canvas.width, canvas.height],
+        compress: true,
+      });
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+
       const pdfDataUri = pdf.output("datauristring").slice(51);
 
       return pdfDataUri;
@@ -136,8 +157,10 @@ export default function ShareableForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const idsValid = formValidation(formConfig); // Validate the formConfig fields
-    if (idsValid) {
+
+    const idsValid = formValidation(identityFields); // Validate the formConfig fields
+    const isValid = formValidation(formConfig); // Validate the formConfig fields
+    if (idsValid && isValid) {
       await handleInfoChange();
       alert("Response was submitted successfully!!");
     } else {
@@ -151,7 +174,7 @@ export default function ShareableForm() {
       // ref={formRef}
     >
       <form
-        className=" bg-white page-shared m-auto text-center"
+        className=" bg-white page-shared m-auto text-center overflow-hidden"
         // onSubmit={handleSubmit}
         ref={formRef}
       >
