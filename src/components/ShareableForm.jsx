@@ -2,7 +2,7 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useState, useRef, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Box, Modal, Typography } from "@mui/material";
 
@@ -25,9 +25,6 @@ export default function ShareableForm() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const powerAutoAPI = import.meta.env.VITE_POWER_AUTOMATE_API;
-  const formFetchAPI = import.meta.env.VITE_FORM_CONFIG_API;
-
   const style = {
     position: "absolute",
     top: "50%",
@@ -41,6 +38,7 @@ export default function ShareableForm() {
   };
   useEffect(() => {
     const fetchFormConfig = async () => {
+      const formFetchAPI = import.meta.env.VITE_FORM_CONFIG_API;
       try {
         const response = await axios.get(`${formFetchAPI}forms/${id}`);
 
@@ -55,6 +53,7 @@ export default function ShareableForm() {
     fetchFormConfig();
   }, [id]);
   useEffect(() => {
+    const powerAutoAPI = import.meta.env.VITE_POWER_AUTOMATE_API;
     if (Object.keys(infoToSend).length > 0) {
       fetch(`${powerAutoAPI}`, {
         method: "POST",
