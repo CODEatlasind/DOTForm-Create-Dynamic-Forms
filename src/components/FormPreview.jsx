@@ -52,16 +52,14 @@ function FormPreview({ formFields, onReset }) {
   //   setPreviewField(updatedPreviewField);
   // };
   // console.log("Fields", previewField);
+  const FormAPI = import.meta.env.VITE_FORM_CONFIG_API;
 
   const handleFormConfigSave = async () => {
     try {
-      const response = await axios.post(
-        "https://form-access-api-git-main-codeatlasinds-projects.vercel.app/api/forms",
-        {
-          heading: formRef.current.querySelector('[id="form-title"]').value,
-          fields: formFields,
-        }
-      );
+      const response = await axios.post(`${FormAPI}forms`, {
+        heading: formRef.current.querySelector('[id="form-title"]').value,
+        fields: formFields,
+      });
       setFormId(response.data.id);
       window.scrollTo(0, 0);
     } catch (err) {

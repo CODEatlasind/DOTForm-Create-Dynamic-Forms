@@ -25,6 +25,9 @@ export default function ShareableForm() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const powerAutoAPI = import.meta.env.VITE_POWER_AUTOMATE_API;
+  const formFetchAPI = import.meta.env.VITE_FORM_CONFIG_API;
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -39,9 +42,7 @@ export default function ShareableForm() {
   useEffect(() => {
     const fetchFormConfig = async () => {
       try {
-        const response = await axios.get(
-          `https://form-access-api-git-main-codeatlasinds-projects.vercel.app/api/forms/${id}`
-        );
+        const response = await axios.get(`${formFetchAPI}forms/${id}`);
 
         setHeading(response.data.heading);
         setFormConfig(response.data.fields);
@@ -55,16 +56,13 @@ export default function ShareableForm() {
   }, [id]);
   useEffect(() => {
     if (Object.keys(infoToSend).length > 0) {
-      fetch(
-        "https://prod2-09.centralindia.logic.azure.com:443/workflows/699cad0be98f4c85b35a39efb19e76d1/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Jn7gfBHAlg6D8YFn3B-huC-sZE-NxjqapRRlVTUzjq4",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(infoToSend),
-        }
-      )
+      fetch(`${powerAutoAPI}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(infoToSend),
+      })
         .then(async (response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -99,7 +97,7 @@ export default function ShareableForm() {
   const handleGeneratePDF = async () => {
     const input = formRef.current;
     const scale = 2;
-    const padding = 0;
+    const padding = 5;
     const PdfConfig = {
       scale: scale,
       useCORS: true,
@@ -123,6 +121,7 @@ export default function ShareableForm() {
         unit: "px",
         format: [canvas.width, canvas.height],
         compress: true,
+        hotfixes: ["px_scaling"],
       });
       pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
 
@@ -174,16 +173,13 @@ export default function ShareableForm() {
       // ref={formRef}
     >
       <form
-        className=" bg-white page-shared m-auto text-center overflow-hidden"
+        className=" bg-white page-shared m-auto text-center  "
         // onSubmit={handleSubmit}
         ref={formRef}
       >
-        <Link
-          to="/"
-          className="associated-title z-10  absolute right-5 top-1 text-xs text-sky-900 "
+        <span
+          className="associated-title   absolute right-5 top-1 text-xs text-sky-900 "
           id="form-builder-home"
-          target="_blank"
-          rel="noreferrer"
         >
           Powered by{" "}
           <span
@@ -192,7 +188,7 @@ export default function ShareableForm() {
           >
             DOTForm
           </span>
-        </Link>
+        </span>
         <header>
           <h1
             className="preview-header text-center font-semibold text-3xl pb-5"
