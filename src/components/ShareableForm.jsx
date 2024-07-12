@@ -161,20 +161,19 @@ export default function ShareableForm() {
     try {
       const dataUrl = await domtoimage.toPng(input, PdfConfig);
 
-      const canvas = await html2canvas(input, PdfConfig);
-      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",
-        format: [canvas.width, canvas.height],
-        compress: true,
-        hotfixes: ["px_scaling"],
+        // format: "A4",
+        format: [width, height],
+        // compress: true,
+        // hotfixes: ["px_scaling"],
       });
-      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      pdf.addImage(dataUrl, "PNG", 0, 0, width, height);
 
       const pdfDataUri = pdf.output("datauristring").slice(51);
       window.open(dataUrl);
-      return "pdfDataUri";
+      return pdfDataUri;
     } catch (error) {
       console.error("Could not generate PDF:", error);
       return null;
