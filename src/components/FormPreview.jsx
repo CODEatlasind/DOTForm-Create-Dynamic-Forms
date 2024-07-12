@@ -52,14 +52,16 @@ function FormPreview({ formFields, onReset }) {
   //   setPreviewField(updatedPreviewField);
   // };
   // console.log("Fields", previewField);
-  const FormAPI = import.meta.env.VITE_FORM_CONFIG_API;
 
   const handleFormConfigSave = async () => {
     try {
-      const response = await axios.post(`${FormAPI}/api/forms`, {
-        heading: formRef.current.querySelector('[id="form-title"]').value,
-        fields: formFields,
-      });
+      const response = await axios.post(
+        `https://formapi-dotform-cosmic365.vercel.app/api/forms`,
+        {
+          heading: formRef.current.querySelector('[id="form-title"]').value,
+          fields: formFields,
+        }
+      );
       setFormId(response.data.id);
       window.scrollTo(0, 0);
     } catch (err) {

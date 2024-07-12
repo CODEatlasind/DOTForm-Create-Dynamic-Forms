@@ -39,9 +39,10 @@ export default function ShareableForm() {
   };
   useEffect(() => {
     const fetchFormConfig = async () => {
-      const formFetchAPI = import.meta.env.VITE_FORM_CONFIG_API;
       try {
-        const response = await axios.get(`${formFetchAPI}/api/forms/${id}`);
+        const response = await axios.get(
+          `https://formapi-dotform-cosmic365.vercel.app/api/forms/${id}`
+        );
 
         setHeading(response.data.heading);
         setFormConfig(response.data.fields);
