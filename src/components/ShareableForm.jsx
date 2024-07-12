@@ -41,7 +41,7 @@ export default function ShareableForm() {
     const fetchFormConfig = async () => {
       const formFetchAPI = import.meta.env.VITE_FORM_CONFIG_API;
       try {
-        const response = await axios.get(`${formFetchAPI}forms/${id}`);
+        const response = await axios.get(`${formFetchAPI}/api/forms/${id}`);
 
         setHeading(response.data.heading);
         setFormConfig(response.data.fields);
@@ -93,46 +93,6 @@ export default function ShareableForm() {
       return true;
     });
   };
-
-  // const handleGeneratePDF = async () => {
-  //   const input = formRef.current;
-  //   const scale = 2;
-  //   const padding = 5;
-  //   const PdfConfig = {
-  //     scale: scale,
-  //     useCORS: true,
-  //     logging: true,
-  //     allowTaint: false,
-  //     x: -padding,
-  //     y: -padding,
-  //     width: input.scrollWidth + padding * 2,
-  //     height: input.scrollHeight + padding * 2,
-
-  //     removeContainer: true,
-  //     backgroundColor: null,
-  //     // imageTimeout: 15000,
-  //   };
-
-  //   try {
-  //     const canvas = await html2canvas(input, PdfConfig);
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF({
-  //       orientation: "portrait",
-  //       unit: "px",
-  //       format: [canvas.width, canvas.height],
-  //       compress: true,
-  //       hotfixes: ["px_scaling"],
-  //     });
-  //     pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-
-  //     const pdfDataUri = pdf.output("datauristring").slice(51);
-
-  //     return pdfDataUri;
-  //   } catch (error) {
-  //     console.error("Could not generate PDF:", error);
-  //     return null;
-  //   }
-  // };
 
   const handleGeneratePDF = async () => {
     const input = formRef.current;

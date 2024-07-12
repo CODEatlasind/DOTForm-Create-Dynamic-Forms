@@ -56,7 +56,7 @@ function FormPreview({ formFields, onReset }) {
 
   const handleFormConfigSave = async () => {
     try {
-      const response = await axios.post(`${FormAPI}forms`, {
+      const response = await axios.post(`${FormAPI}/api/forms`, {
         heading: formRef.current.querySelector('[id="form-title"]').value,
         fields: formFields,
       });
