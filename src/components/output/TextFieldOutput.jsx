@@ -24,7 +24,6 @@ export default function TextFieldOutput(id, typos, attr) {
         autoComplete={attr.autoComplete}
         required={attr.required}
         size="small"
-        fullWidth
       />
       {typos.smallDescription && (
         <>
