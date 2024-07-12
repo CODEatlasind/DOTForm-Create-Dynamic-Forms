@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Box, Modal, Typography } from "@mui/material";
+import domtoimage from "dom-to-image";
 
 // Designed Conmponents
 import FieldPreview from "./output/FieldPreview";
@@ -93,26 +94,73 @@ export default function ShareableForm() {
     });
   };
 
+  // const handleGeneratePDF = async () => {
+  //   const input = formRef.current;
+  //   const scale = 2;
+  //   const padding = 5;
+  //   const PdfConfig = {
+  //     scale: scale,
+  //     useCORS: true,
+  //     logging: true,
+  //     allowTaint: false,
+  //     x: -padding,
+  //     y: -padding,
+  //     width: input.scrollWidth + padding * 2,
+  //     height: input.scrollHeight + padding * 2,
+
+  //     removeContainer: true,
+  //     backgroundColor: null,
+  //     // imageTimeout: 15000,
+  //   };
+
+  //   try {
+  //     const canvas = await html2canvas(input, PdfConfig);
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF({
+  //       orientation: "portrait",
+  //       unit: "px",
+  //       format: [canvas.width, canvas.height],
+  //       compress: true,
+  //       hotfixes: ["px_scaling"],
+  //     });
+  //     pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+
+  //     const pdfDataUri = pdf.output("datauristring").slice(51);
+
+  //     return pdfDataUri;
+  //   } catch (error) {
+  //     console.error("Could not generate PDF:", error);
+  //     return null;
+  //   }
+  // };
+
   const handleGeneratePDF = async () => {
     const input = formRef.current;
     const scale = 2;
     const padding = 5;
+    var bodyRect = document.body.getBoundingClientRect(),
+      elemRect = input.getBoundingClientRect(),
+      offset = elemRect.left - bodyRect.left;
+    console.log("offset", offset);
+    const { x, y, width, height } = input.getBoundingClientRect();
+    // console.log(x, y, width, height);
     const PdfConfig = {
-      scale: scale,
-      useCORS: true,
-      logging: true,
-      allowTaint: false,
-      x: -padding,
-      y: -padding,
-      width: input.scrollWidth + padding * 2,
-      height: input.scrollHeight + padding * 2,
-
-      removeContainer: true,
-      backgroundColor: null,
-      // imageTimeout: 15000,
+      width: width * scale + padding * 2,
+      height: height * scale + padding * 2,
+      style: {
+        transform: `scale(${scale})`,
+        transformOrigin: "top ",
+        padding: `${padding}px`,
+        backgroundColor: "white", // Ensure background is white
+        margin: "auto",
+      },
+      // x: -padding,
+      // y: -padding,
     };
 
     try {
+      const dataUrl = await domtoimage.toPng(input, PdfConfig);
+
       const canvas = await html2canvas(input, PdfConfig);
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({
@@ -125,8 +173,8 @@ export default function ShareableForm() {
       pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
 
       const pdfDataUri = pdf.output("datauristring").slice(51);
-
-      return pdfDataUri;
+      window.open(dataUrl);
+      return "pdfDataUri";
     } catch (error) {
       console.error("Could not generate PDF:", error);
       return null;
@@ -167,99 +215,101 @@ export default function ShareableForm() {
   };
 
   return (
-    <div
-      className="form-share-container relative  bg-dark-body-blue "
-      // ref={formRef}
-    >
-      <form
-        className=" bg-white page-shared m-auto text-center  "
-        // onSubmit={handleSubmit}
-        ref={formRef}
+    <>
+      <div
+        className="form-share-container flex flex-row justify-center align-middle  bg-dark-body-blue "
+        // ref={formRef}
       >
-        <span
-          className="associated-title   absolute right-5 top-1 text-xs text-sky-900 "
-          id="form-builder-home"
+        <form
+          className=" bg-white  page-shared text-center  justify-center"
+          // onSubmit={handleSubmit}
+          ref={formRef}
         >
-          Powered by{" "}
           <span
-            className="text-cyan-500 font-extrabold text-sm"
-            id="builder-branding"
+            className="associated-title   absolute right-5 top-1 text-xs text-sky-900 "
+            id="form-builder-home"
           >
-            DOTForm
-          </span>
-        </span>
-        <header>
-          <h1
-            className="preview-header text-center font-semibold text-3xl pb-5"
-            id="shared-form-title"
-            // onChange={handleInput}
-            // ref={titleRef}
-          >
-            {heading}
-          </h1>
-        </header>
-
-        <RequiredFields compulsaryFields={identityFields} />
-        <div className="supplemented-fields  ">
-          {formConfig &&
-            formConfig.map((field, idx) => {
-              return (
-                <FieldPreview
-                  key={"form-shared" + field.type + idx}
-                  id={field.id}
-                  type={field.type}
-                  typos={field.typos}
-                  attr={field.attr}
-                />
-              );
-            })}
-        </div>
-        <div className="signature-container">
-          <Modal
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="keep-mounted-modal-title"
-            aria-describedby="keep-mounted-modal-description"
-          >
-            <Box sx={style}>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h2"
-              >
-                E-Signature Field
-              </Typography>
-              <SignatureInput onSignature={handleSignatureInput} />
-              <p
-                className="scale-2 mt-2 cursor-pointer font-extrabold text-dark-sec-blue"
-                onClick={handleClose}
-              >
-                Done
-              </p>
-            </Box>
-          </Modal>
-          {signed && (
-            <img
-              src={signed}
-              alt="e-Sign Will Appear Here"
-              id="e-Signatute"
-              className="object-scale-down absolute bottom-2 right-2"
-              style={{ scale: "0.35" }}
-            ></img>
-          )}
-          {!signed && (
-            <button
-              type="button"
-              className="toggle-sign-modal absolute bottom-1 right-2 scale-75 hover:scale-90"
-              onClick={handleOpen}
+            Powered by{" "}
+            <span
+              className="text-cyan-500 font-extrabold text-sm"
+              id="builder-branding"
             >
-              Sign Here!!
-            </button>
-          )}
-        </div>
-      </form>
-      <div className="form-control-btn relative p-2 justify-center flex flex-wrap gap-6 ">
+              DOTForm
+            </span>
+          </span>
+          <header>
+            <h1
+              className="preview-header text-center font-semibold text-3xl pb-5"
+              id="shared-form-title"
+              // onChange={handleInput}
+              // ref={titleRef}
+            >
+              {heading}
+            </h1>
+          </header>
+
+          <RequiredFields compulsaryFields={identityFields} />
+          <div className="supplemented-fields  ">
+            {formConfig &&
+              formConfig.map((field, idx) => {
+                return (
+                  <FieldPreview
+                    key={"form-shared" + field.type + idx}
+                    id={field.id}
+                    type={field.type}
+                    typos={field.typos}
+                    attr={field.attr}
+                  />
+                );
+              })}
+          </div>
+          <div className="signature-container">
+            <Modal
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+              <Box sx={style}>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h2"
+                >
+                  E-Signature Field
+                </Typography>
+                <SignatureInput onSignature={handleSignatureInput} />
+                <p
+                  className="scale-2 mt-2 cursor-pointer font-extrabold text-dark-sec-blue"
+                  onClick={handleClose}
+                >
+                  Done
+                </p>
+              </Box>
+            </Modal>
+            {signed && (
+              <img
+                src={signed}
+                alt="e-Sign Will Appear Here"
+                id="e-Signatute"
+                className="object-scale-down absolute bottom-2 right-2"
+                style={{ scale: "0.35" }}
+              ></img>
+            )}
+            {!signed && (
+              <button
+                type="button"
+                className="toggle-sign-modal absolute bottom-1 right-2 scale-75 hover:scale-90"
+                onClick={handleOpen}
+              >
+                Sign Here!!
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+      <div className="form-control-btn  flex flex-row justify-center">
         <button
           type="submit"
           onClick={handleSubmit}
@@ -269,6 +319,6 @@ export default function ShareableForm() {
           Submit
         </button>
       </div>
-    </div>
+    </>
   );
 }
