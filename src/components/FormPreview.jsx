@@ -38,28 +38,19 @@ function FormPreview({ formFields, onReset }) {
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
-  // const onSub = (currentId, currentType) => {
-  //   // const updatedPreviewField = [
-  //   // const updatedPreviewField = [
-  //   //   ...previewField.slice(0, currentId),
-  //   //   ...previewField.slice(currentId + 1),
-  //   // ];
-  //   // setPreviewField(updatedPreviewField);
-  //   const updatedPreviewField = previewField.filter((field) => {
-  //     field.id !== currentId;
-  //   });
-
-  //   setPreviewField(updatedPreviewField);
-  // };
-  // console.log("Fields", previewField);
 
   const handleFormConfigSave = async () => {
     try {
       const response = await axios.post(
-        `https://formapi-dotform-cosmic365.vercel.app/api/forms`,
+        `https://form-fetch-api-cosmic365.vercel.app/api/forms`,
         {
           heading: formRef.current.querySelector('[id="form-title"]').value,
           fields: formFields,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
       setFormId(response.data.id);
@@ -74,7 +65,12 @@ function FormPreview({ formFields, onReset }) {
       <div className="link-box mx-2 my-2 py-2 px-2 border-cyan-800 rounded bg-white ">
         {formId ? (
           <>
-            <Link to={"/forms/" + formId} className="underline to-blue-500">
+            <Link
+              to={"/forms/" + formId}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline to-blue-500 overflow-auto"
+            >
               {formLink}{" "}
             </Link>
             <ContentPasteIcon

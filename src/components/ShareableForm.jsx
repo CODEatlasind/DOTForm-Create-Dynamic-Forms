@@ -38,7 +38,7 @@ export default function ShareableForm() {
     p: 4,
   };
   useEffect(() => {
-    const formFetchAPI = `http://localhost:9737/api/forms/${id}`;
+    const formFetchAPI = `https://form-fetch-api-cosmic365.vercel.app/api/forms/${id}`;
     const fetchFormConfig = async () => {
       try {
         const response = await axios.get(formFetchAPI);
@@ -56,7 +56,8 @@ export default function ShareableForm() {
 
   useEffect(() => {
     if (Object.keys(infoToSend).length > 0) {
-      const emailAPI = "http://localhost:9737/api/send-email";
+      const emailAPI =
+        "https://form-fetch-api-cosmic365.vercel.app/api/send-email";
       const sendEmail = async () => {
         try {
           const formData = new FormData();
