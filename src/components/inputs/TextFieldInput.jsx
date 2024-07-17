@@ -96,12 +96,11 @@ function TextFieldInput({ id, type, onSubCompletion }) {
           <>
             <small>Preview</small>
             <FieldPreview
+              key="Accordion10"
               id="10"
               type="text"
               typos={typography}
               attr={attributes}
-              onTypoChange={handleChange}
-              onAttributeChange={handleAttributeChange}
             />
             <button
               key={"Submit" + Element.id}

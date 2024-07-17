@@ -51,6 +51,7 @@ export default function NumberInput({ id, type, onSubCompletion }) {
           <>
             <small>Preview</small>
             <FieldPreview
+              key="Accordion6"
               id="6"
               type="number"
               typos={typography}

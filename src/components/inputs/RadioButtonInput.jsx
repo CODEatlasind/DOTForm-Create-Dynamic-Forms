@@ -144,6 +144,7 @@ export default function RadioButtonInput({ id, type, onSubCompletion }) {
             <br />
             {attributes && Object.keys(attributes).length > 0 && (
               <FieldPreview
+                key="Accordion8"
                 id="8"
                 type="radio"
                 typos={typography}

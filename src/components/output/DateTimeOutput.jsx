@@ -3,17 +3,17 @@ import { TextField } from "@mui/material";
 export default function DateTimeOutput(id, typos, attr) {
   return (
     <>
-      <div key={"D&T" + id} className=" flex gap-2 justify-center items-center">
-        <label className="">
-          {typos.label != "" ? typos.label + " Date: " : "Date: "}
+      <div key={"D&T" + id} className=" ">
+        <label className="flex justify-center items-baseline gap-1">
+          {typos.label != "" ? typos.label + " Date" : "Date"}
+          <TextField type="date" id={id} size="small" />
         </label>
-        <TextField type="date" id={id} size="small" />
+        {typos.smallDescription && (
+          <>
+            <small>{typos.smallDescription}</small>
+          </>
+        )}
       </div>
-      {typos.smallDescription && (
-        <>
-          <small>{typos.smallDescription}</small>
-        </>
-      )}
     </>
   );
 }

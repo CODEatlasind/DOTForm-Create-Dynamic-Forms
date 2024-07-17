@@ -22,7 +22,7 @@ export default function SignatureInput({ onSignature }) {
     <>
       <section className="border-dashed border-2 border-gray-900 ">
         <SignatureCanvas
-          penColor="green"
+          penColor="blue"
           canvasProps={{
             width: 400,
             height: 200,

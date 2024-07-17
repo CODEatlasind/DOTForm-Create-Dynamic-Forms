@@ -56,11 +56,13 @@ function FormAccordion({ onAdd }) {
                   id="panel2-header"
                   className="field-selector uppercase"
                 >
-                  <Typography key={Element.id}>{Element.name}</Typography>
+                  <Typography key={"Name" + Element.id}>
+                    {Element.name}
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails
                   className="text-center "
-                  key={"DD" + Element.id}
+                  key={"ADetails" + Element.id}
                 >
                   {
                     <Element.component
@@ -70,34 +72,6 @@ function FormAccordion({ onAdd }) {
                       onSubCompletion={onAdd}
                     />
                   }
-
-                  {/* <button
-                    key={"Submit" + Element.id}
-                    type="submit"
-                    onClick={() => {
-                      if (
-                        Element.type === "checkbox" ||
-                        Element.type === "radio"
-                      ) {
-                        if (
-                          Element.formStyle.typos.label !== "" &&
-                          Element.formStyle.typos.name !== ""
-                        ) {
-                          onAdd(Element.id, Element.type, Element.formStyle);
-                        }
-                      } else if (
-                        Element.type === "heading" ||
-                        Element.type === "heading"
-                      ) {
-                        if (Element.formStyle.typos.label !== "")
-                          onAdd(Element.id, Element.type, Element.formStyle);
-                      } else onAdd(Element.id, Element.type, Element.formStyle);
-                    }}
-                    className="btn btn-add "
-                  > 
-                    Add
-                  </button>
-                  */}
                 </AccordionDetails>
               </Accordion>
             );

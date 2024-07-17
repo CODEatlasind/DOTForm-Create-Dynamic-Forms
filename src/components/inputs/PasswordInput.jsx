@@ -63,6 +63,7 @@ export default function PasswordInput({ id, type, onSubCompletion }) {
         <div className="preview-field">
           <small>Preview</small>
           <FieldPreview
+            key="Accordion7"
             id="7"
             type="password"
             typos={typography}

@@ -49,7 +49,13 @@ function TeleInput({ id, type, onSubCompletion }) {
       </div>
       <section className="preview-field">
         <small>Preview</small>
-        <FieldPreview id="9" type="tel" typos={typography} attr={attributes} />
+        <FieldPreview
+          key="Accordion9"
+          id="9"
+          type="tel"
+          typos={typography}
+          attr={attributes}
+        />
         <button
           key={"Submit" + Element.id}
           type="button"

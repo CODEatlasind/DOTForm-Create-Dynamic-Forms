@@ -14,7 +14,6 @@ import RequiredFields from "./config/RequiredFields";
 import identityFields from "./config/compulsaryFields";
 import SignatureInput from "./inputs/SignatureInput";
 
-// !Add secure method for url
 export default function ShareableForm() {
   const { id } = useParams();
   const [formConfig, setFormConfig] = useState(null);
@@ -23,6 +22,7 @@ export default function ShareableForm() {
   const formRef = useRef();
   const [open, setOpen] = useState(false);
   const [signed, setSigned] = useState();
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -38,11 +38,10 @@ export default function ShareableForm() {
     p: 4,
   };
   useEffect(() => {
+    const formFetchAPI = `http://localhost:9737/api/forms/${id}`;
     const fetchFormConfig = async () => {
       try {
-        const response = await axios.get(
-          `https://formapi-dotform-cosmic365.vercel.app/api/forms/${id}`
-        );
+        const response = await axios.get(formFetchAPI);
 
         setHeading(response.data.heading);
         setFormConfig(response.data.fields);
@@ -54,37 +53,49 @@ export default function ShareableForm() {
 
     fetchFormConfig();
   }, [id]);
+
   useEffect(() => {
-    const powerAutoAPI = import.meta.env.VITE_POWER_AUTOMATE_API;
     if (Object.keys(infoToSend).length > 0) {
-      fetch(`${powerAutoAPI}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(infoToSend),
-      })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.text().then((text) => {
-            return text ? JSON.parse(text) : {};
+      const emailAPI = "http://localhost:9737/api/send-email";
+      const sendEmail = async () => {
+        try {
+          const formData = new FormData();
+          formData.append("name", infoToSend.name);
+          formData.append("email", infoToSend.email);
+          formData.append(
+            "file",
+            infoToSend.file.content,
+            infoToSend.file.filename
+          );
+
+          // const response = await axios.post(emailAPI, formData, {
+          //   headers: {
+          //     "Content-Type": "multipart/form-data",
+          //   },
+          // });
+          const response = await axios.post(emailAPI, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           });
-        })
-        .then((data) => {
+          // const response = await fetch(emailAPI, {
+          //   method: "POST",
+          //   body: formData,
+          // });
+
+          const data = await response.json();
           console.log("Response:", data);
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error:", error);
-        });
+        }
+      };
+      sendEmail();
     }
   }, [infoToSend]);
-
   if (!formConfig) {
     return <div>Loading...</div>;
   }
-
+  //Validations
   const formValidation = (fieldset) => {
     return fieldset.every((field) => {
       if (field.attr && field.attr.required) {
@@ -93,6 +104,13 @@ export default function ShareableForm() {
       }
       return true;
     });
+  };
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
   };
 
   const handleGeneratePDF = async () => {
@@ -115,8 +133,6 @@ export default function ShareableForm() {
         backgroundColor: "white", // Ensure background is white
         margin: "auto",
       },
-      // x: -padding,
-      // y: -padding,
     };
 
     try {
@@ -125,16 +141,12 @@ export default function ShareableForm() {
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",
-        // format: "A4",
         format: [width, height],
-        // compress: true,
-        // hotfixes: ["px_scaling"],
       });
       pdf.addImage(dataUrl, "PNG", 0, 0, width, height);
-
-      const pdfDataUri = pdf.output("datauristring").slice(51);
-      window.open(dataUrl);
-      return pdfDataUri;
+      let pdfBlob = pdf.output("blob");
+      console.log(pdfBlob);
+      return pdfBlob;
     } catch (error) {
       console.error("Could not generate PDF:", error);
       return null;
@@ -144,17 +156,23 @@ export default function ShareableForm() {
   const handleInfoChange = async () => {
     var recpient_name = formRef.current.querySelector(`[id="-2"]`).value;
     var recpient_email = formRef.current.querySelector(`[id="-1"]`).value;
-    var submissionName = recpient_name + "_Submission";
-    const pdfBase64 = await handleGeneratePDF();
-    setInfoToSend({
-      name: recpient_name,
-      email: recpient_email,
-      file: {
-        filename: submissionName,
-        contentType: "application/pdf",
-        content: pdfBase64,
-      },
-    });
+    var submissionName = recpient_name + "_Submission.pdf";
+    const pdfBlob = await handleGeneratePDF();
+
+    if (pdfBlob) {
+      setInfoToSend({
+        name: recpient_name,
+        email: recpient_email,
+        file: {
+          filename: submissionName,
+          contentType: "application/pdf",
+          content: pdfBlob,
+        },
+      });
+    } else {
+      console.error("PDF generation failed");
+      alert("Failed to generate PDF. Please try again.");
+    }
   };
 
   const handleSignatureInput = (signImgURL) => {
@@ -166,9 +184,16 @@ export default function ShareableForm() {
 
     const idsValid = formValidation(identityFields); // Validate the formConfig fields
     const isValid = formValidation(formConfig); // Validate the formConfig fields
-    if (idsValid && isValid) {
-      await handleInfoChange();
-      alert("Response was submitted successfully!!");
+    const isEmailValid = validateEmail(
+      formRef.current.querySelector(`[id="-1"]`).value
+    );
+    if (idsValid && isValid && signed) {
+      if (isEmailValid) {
+        await handleInfoChange();
+        alert("Response was submitted successfully!!");
+      } else {
+        alert("Please enter a valid email address");
+      }
     } else {
       alert("Please fill out all required fields");
     }
@@ -176,13 +201,9 @@ export default function ShareableForm() {
 
   return (
     <>
-      <div
-        className="form-share-container flex flex-row justify-center align-middle  bg-dark-body-blue "
-        // ref={formRef}
-      >
+      <div className="form-share-container flex flex-row justify-center align-middle  bg-dark-body-blue ">
         <form
           className=" bg-white  page-shared text-center  justify-center"
-          // onSubmit={handleSubmit}
           ref={formRef}
         >
           <span
@@ -201,8 +222,6 @@ export default function ShareableForm() {
             <h1
               className="preview-header text-center font-semibold text-3xl pb-5"
               id="shared-form-title"
-              // onChange={handleInput}
-              // ref={titleRef}
             >
               {heading}
             </h1>
@@ -211,10 +230,10 @@ export default function ShareableForm() {
           <RequiredFields compulsaryFields={identityFields} />
           <div className="supplemented-fields  ">
             {formConfig &&
-              formConfig.map((field, idx) => {
+              formConfig.map((field) => {
                 return (
                   <FieldPreview
-                    key={"form-shared" + field.type + idx}
+                    key={"form-shared" + field.id}
                     id={field.id}
                     type={field.type}
                     typos={field.typos}

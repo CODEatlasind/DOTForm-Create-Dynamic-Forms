@@ -40,7 +40,12 @@ export default function Heading({ id, type, onSubCompletion }) {
         {typography.label ? (
           <>
             <small>Preview</small>
-            <FieldPreview id="4" type="heading" typos={typography} />
+            <FieldPreview
+              key="Accordion4"
+              id="4"
+              type="heading"
+              typos={typography}
+            />
             <button
               key={"Submit" + Element.id}
               type="submit"

@@ -61,12 +61,12 @@ export default function FormBuilder() {
   return (
     <div className="form-container bg-cyan-50 dark:bg-dark-body-blue  flex flex-wrap lg:flex-nowrap justify-center p-4 lg:py-8">
       <FormAccordion onAdd={handleAddition} />
-
+      {/* 
       <FormPreview
         formFields={formFields}
         onSave={handleSave}
         onReset={handleReset}
-      />
+      /> */}
     </div>
   );
 }

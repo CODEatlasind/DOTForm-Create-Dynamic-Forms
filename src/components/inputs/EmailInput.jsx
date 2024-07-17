@@ -50,6 +50,7 @@ export default function EmailInput({ id, type, onSubCompletion }) {
       <section className="preview-field">
         <small>Preview</small>
         <FieldPreview
+          key="Accordion3"
           id="3"
           type="email"
           typos={typography}

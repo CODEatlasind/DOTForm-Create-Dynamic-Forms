@@ -134,6 +134,7 @@ export default function CheckboxInput({ id, type, onSubCompletion }) {
             <small>Preview</small>
             {attributes && Object.keys(attributes).length > 0 && (
               <FieldPreview
+                key="Accordion1"
                 id="1"
                 type="checkbox"
                 typos={typography}

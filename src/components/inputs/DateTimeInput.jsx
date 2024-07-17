@@ -43,14 +43,13 @@ export default function DateTimeInput({ id, type, onSubCompletion }) {
         <hr className="mt-2 mb-2 " />
       </div>
       <section className="preview-field">
-        <small>Preview</small>  
+        <small>Preview</small>
         <FieldPreview
-          id={"2"}
+          key="Accordion2"
+          id="2"
           type="date"
           typos={typography}
           attr={attributes}
-          onTypoChange={handleTypographicalChange}
-          onAttributeChange={handleChange}
         />
       </section>
       <button
