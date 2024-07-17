@@ -58,6 +58,7 @@ export default function ShareableForm() {
     if (Object.keys(infoToSend).length > 0) {
       const emailAPI =
         "https://form-fetch-api-cosmic365.vercel.app/api/send-email";
+
       const sendEmail = async () => {
         try {
           const formData = new FormData();
@@ -69,20 +70,11 @@ export default function ShareableForm() {
             infoToSend.file.filename
           );
 
-          // const response = await axios.post(emailAPI, formData, {
-          //   headers: {
-          //     "Content-Type": "multipart/form-data",
-          //   },
-          // });
           const response = await axios.post(emailAPI, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
-          // const response = await fetch(emailAPI, {
-          //   method: "POST",
-          //   body: formData,
-          // });
 
           const data = await response.json();
           console.log("Response:", data);
