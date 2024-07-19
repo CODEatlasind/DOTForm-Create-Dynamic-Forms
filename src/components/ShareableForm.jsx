@@ -25,6 +25,7 @@ export default function ShareableForm() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const backendAPIURL = "https://form-fetch-api-cosmic365.vercel.app";
 
   const style = {
     position: "absolute",
@@ -38,7 +39,7 @@ export default function ShareableForm() {
     p: 4,
   };
   useEffect(() => {
-    const formFetchAPI = `https://form-fetch-api-cosmic365.vercel.app/api/forms/${id}`;
+    const formFetchAPI = `${backendAPIURL}/api/forms/${id}`;
     const fetchFormConfig = async () => {
       try {
         const response = await axios.get(formFetchAPI);
@@ -56,8 +57,7 @@ export default function ShareableForm() {
 
   useEffect(() => {
     if (Object.keys(infoToSend).length > 0) {
-      const emailAPI =
-        "https://form-fetch-api-cosmic365.vercel.app/api/send-email";
+      const emailAPI = `${backendAPIURL}/api/send-email`;
 
       const sendEmail = async () => {
         try {
@@ -76,8 +76,7 @@ export default function ShareableForm() {
             },
           });
 
-          const data = await response.json();
-          console.log("Response:", data);
+          alert("Response was submitted successfully!!");
         } catch (error) {
           console.error("Error:", error);
         }
@@ -175,15 +174,15 @@ export default function ShareableForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const idsValid = formValidation(identityFields); // Validate the formConfig fields
-    const isValid = formValidation(formConfig); // Validate the formConfig fields
+    const idsValid = formValidation(identityFields);
+    const isValid = formValidation(formConfig);
     const isEmailValid = validateEmail(
       formRef.current.querySelector(`[id="-1"]`).value
     );
     if (idsValid && isValid && signed) {
       if (isEmailValid) {
         await handleInfoChange();
-        alert("Response was submitted successfully!!");
+        alert("Submission queued. Confirm to Proceed!!");
       } else {
         alert("Please enter a valid email address");
       }
@@ -282,14 +281,23 @@ export default function ShareableForm() {
         </form>
       </div>
       <div className="form-control-btn  flex flex-row justify-center">
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className="bg-dark-element-hint text-white"
-          id="shared-form-submit-button"
-        >
-          Submit
-        </button>
+        {infoToSend ? (
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="bg-dark-element-hint text-white"
+            id="shared-form-submit-button"
+          >
+            Submit
+          </button>
+        ) : (
+          <button
+            className="bg-dark-element-hint text-white"
+            id="shared-form-submit-button"
+          >
+            Sending
+          </button>
+        )}
       </div>
     </>
   );
