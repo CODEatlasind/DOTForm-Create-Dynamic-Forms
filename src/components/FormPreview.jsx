@@ -10,8 +10,7 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import identityFields from "./config/compulsaryFields";
 import FieldPreview from "./output/FieldPreview";
 import RequiredFields from "./config/RequiredFields";
-// import generatePDF from "react-to-pdf";
-// import PdfConfig from "./config/PdfConfig";
+
 
 // !Add secure method for url
 // !Set Substract method
@@ -21,6 +20,8 @@ function FormPreview({ formFields, onReset }) {
   // const [previewField, setPreviewField] = useState([]);
   const [formId, setFormId] = useState(null);
   const [formLink, setFormLink] = useState(null);
+
+  const backendAPIURL = "https://form-fetch-api-cosmic365.onrender.com";
 
   useEffect(() => {
     document.title = "DOTForm - " + title;
@@ -42,7 +43,7 @@ function FormPreview({ formFields, onReset }) {
   const handleFormConfigSave = async () => {
     try {
       const response = await axios.post(
-        `https://form-fetch-api-cosmic365.vercel.app/api/forms`,
+        backendAPIURL + "/api/forms",
         {
           heading: formRef.current.querySelector('[id="form-title"]').value,
           fields: formFields,

@@ -25,7 +25,8 @@ export default function ShareableForm() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const backendAPIURL = "https://form-fetch-api-cosmic365.vercel.app";
+
+  const backendAPIURL = "https://form-fetch-api-cosmic365.onrender.com";
 
   const style = {
     position: "absolute",
@@ -112,7 +113,7 @@ export default function ShareableForm() {
     var bodyRect = document.body.getBoundingClientRect(),
       elemRect = input.getBoundingClientRect(),
       offset = elemRect.left - bodyRect.left;
-    console.log("offset", offset);
+    // console.log("offset", offset);
     const { x, y, width, height } = input.getBoundingClientRect();
     // console.log(x, y, width, height);
     const PdfConfig = {
@@ -125,6 +126,7 @@ export default function ShareableForm() {
         backgroundColor: "white", // Ensure background is white
         margin: "auto",
       },
+      quality: 0.75,
     };
 
     try {
@@ -137,7 +139,7 @@ export default function ShareableForm() {
       });
       pdf.addImage(dataUrl, "PNG", 0, 0, width, height);
       let pdfBlob = pdf.output("blob");
-      console.log(pdfBlob);
+      console.log(URL.createObjectURL(pdfBlob));
       return pdfBlob;
     } catch (error) {
       console.error("Could not generate PDF:", error);
